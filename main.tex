@@ -1,33 +1,49 @@
 % !TeX spellcheck = en_US
 \documentclass[%
 % DOCUMENT LAYOUT
-		a4paper,
-		12pt,             % The default document font size, options: 10pt, 11pt, 12pt
-		doublespacing,    % Single line spacing, alternatives: onehalfspacing or doublespacing,singlespacing
-		nolistspacing,    % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
-        indentfirst,      % Uncomment to indent the first paragraph in a block (chapter, section, subsection etc} 
-        parskip,          % Uncomment to add space between paragraphs
-        headsepline,      % Uncomment to get a line under the header
-%        chapterinoneline, % Uncomment to place the chapter title next to the number on one line
-%        consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+a4paper,           % paper size
+12pt,              % The default document font size, options: 10pt, 11pt, 12pt
+onehalfspacing,    % onehalfspacing line spacing, alternatives: doublespacing, or singlespacing
+nolistspacing,     % If the document is onehalfspacing or doublespacing, uncomment this to set spacing
+		    	   % in lists to single
+indentfirst,       % Uncomment to indent the first paragraph of each chapter/section/etc. 
+parskip,           % Uncomment to add space between paragraphs
+headsepline,       % Uncomment to get a line under the header
+%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and 
+                   % acknowledgements pages to match the default layout
+liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+toctotoc, % Uncomment to add the main table of contents to the table of contents
 %		
-% LANGUAGE SETUP		
-		 {french,english}, % second, first -- USE IF YOU ARE WRITING IN ENGLISH
-%		{english,french}, % second, first  -- USE IF YOU ARE WRITING IN FRENCH
-% FOR DEBUGING         
-%        draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+% -----------------
+% LANGUAGE SETUP <--- LOOK AT ME I'M VERY IMPORTANT!	
+% -----------------	
+%{french,english},  % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN ENGLISH
+{english,french}, % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN FRENCH
+% -----------------
+% EXTRA RESOURCES
+% -----------------	
+nocleverefsupport, % Uncomment to not load the  clevref package (\Cref and \cref)
+nohyperrefsupport, % Uncomment to not load the hyperref package
+% -----------------
+% FOR DEBUGING     
+% -----------------    
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 ]{MathSTICUBL}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{mathpazo} % Use the Palatino font by default
 %\usepackage[libertine,cmintegrals,cmbraces,vvarbb]{newtxmath}
 %\usepackage[scaled=0.95]{inconsolata}
+\usepackage{siunitx} % for unites 
 
-
+% Used only for examples
 \usepackage{blindtext}    % for this example file only
 \usepackage{lipsum}       % for his example file only
 \usepackage[Q=yes]{examplep} % for his example file only
+%----------------
 
+\usepackage{algorithmic} % you can use another.
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
@@ -88,7 +104,7 @@
 %\school{UR1}   %   UR1 - Université Rennes 1
 %\school{UR2}   %   UR2 - Université Rennes 2 
 % ENIB
-\school{UR2}
+\school{AGRO}
 %----------------------------------------------------------------------------------------
 % Look at https://theses.u-bretagneloire.fr/bs
 \lab{IRISA --- UMR6074}
@@ -97,7 +113,7 @@
 \subject{voir liste des spécialités} % Informatique
 %----------------------------------------------------------------------------------------
 % In case of cotutle, we need to inform, the logo_path and the university name
-%\cotutele{logo-PUCMINAS}{Pontifícia Universidade Católica de Minas Gerais --- Brasil}
+\cotutele{logo-PUCMINAS}{Pontifícia Universidade Católica de Minas Gerais --- Brasil}
 %----------------------------------------------------------------------------------------
 % city
 \city{Lieu}
@@ -119,41 +135,33 @@
 %----------------------------------------------------------------------------------------
 % If your thesis is in French
 %----------------------------------------------------------------------------------------
-\title{Titre de la thèse}
-\subtitle{Sous-titre de la thèse}
-\titleF{Thesis title}
-\subtitleF{Thesis subtitle}
+\title{Thesis Title}
+\subtitle{Thesis subtitle}
+\titre{Titre de la thèse}
+\soustitre{Sous-titre de la thèse}
 
-%----------------------------------------------------------------------------------------
-% If your thesis is in English
-%----------------------------------------------------------------------------------------
-%\title{Thesis Title}
-%\subtitle{Thesis Subtitle}
-%\titleF{Titre de la thèse}
-%\subtitleF{Sous-titre de la thèse}
 
 %----------------------------------------------------------------------------------------
 % Abstract: 
 %----------------------------------------------------------------------------------------
 \abstract{%
-	\blindtext[3]
-}
-\keywords{Anglais, Français, Université}
-
-%----------------------------------------------------------------------------------------
-\abstractF{% 
 	\foreignlanguage{english}{\blindtext[3]}
 }
-\keywordsF{English, French, University}
+\keywords{from 3 to 6 keywords}
+
+%----------------------------------------------------------------------------------------
+\resume{% 
+	\foreignlanguage{french}{\blindtext[3]}
+}
+\motscles{de 3 à 6 mots clefs}
 %----------------------------------------------------------------------------------------
 
 
 \usepackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 \addbibresource{example.bib} % The filename of the bibliography
 \begin{document}
-\frontmatter		 % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
-\dominitoc 			 % to start minitoc support (Table of contents per chapter)	
-\maketitle			 % make the cover 
+\frontmatter%		 % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+\maketitle%			 % make the cover 
 
 
 \pagestyle{plain}	 % Default to the plain heading style until the thesis style is called for the body content
@@ -169,24 +177,22 @@
 %----------------------------------------------------------------------------------------
 %	Acknowledgements
 %----------------------------------------------------------------------------------------
-\include{./TeX_files/acknowledgements}
+\include{./TeX_files/04_acknowledgements}
 
-%\setcounter{mtc}{2}   % To fix the minitoc content (before Résumé Étendú we have the acknow.)
+\setcounter{mtc}{2}   % To fix the minitoc content (before Résumé Étendú we have the acknow.)
 %----------------------------------------------------------------------------------------
 %	Resume Etendu en Francais (only if your thesis is in English)
 %----------------------------------------------------------------------------------------
-\include{./TeX_files/resume_francais}
+\include{./TeX_files/06_resume_francais}
 
 %----------------------------------------------------------------------------------------
 %	Table pf contents
 %----------------------------------------------------------------------------------------
-\newcounter{savepage}
-\setcounter{savepage}{\number\value{page}}
-\mainmatter % Begin numeric (1,2,3...) page numbering
-\pagestyle{thesis} % Return the page headers back to the "thesis" style
+\mainmatter%                     % Begin numeric (1,2,3...) page numbering
+\pagestyle{thesis}               % Return the page headers back to the "thesis" style
 %\pdfbookmark[1]{Contents}{toc}
-\shorttoc{Contents}{1}
-\setcounter{page}{\numexpr\value{savepage}+1}
+\summary% 
+
 
 
 
@@ -198,37 +204,38 @@
 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
-\include{./TeX_files/chapter01}
-\include{./TeX_files/chapter02}
-%\include{./TeX_files/chapter03} 
-%\include{./TeX_files/chapter04} 
-%\include{./TeX_files/chapter05} 
+\include{./TeX_files/10_chapter1}
+\include{./TeX_files/20_chapter2}
+%\include{./TeX_files/03_chapter} 
+%\include{./TeX_files/04_chapter} 
+%\include{./TeX_files/05_chapter} 
+ 
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+\backmatter
+\tableofcontents   % Prints the main table of contents
+\listoffigures     % Prints the list of figures
+\listoftables  	   % Prints the list of tables
+\listofalgorithms  % Prints the list of tables
+\include{./TeX_files/00_symbols}	   % list of symbols
+\include{./TeX_files/01_constants}     % list of constants
+\include{./TeX_files/02_abbreviations} % list of abbreviations
 
-
-\backmatter%
-
-\tableofcontents % Prints the main table of contents
+% Uncomment the lines as you write the Appendices
+\part*{Appendices}
+\appendix 			% Cue to tell LaTeX that the following "chapters" are Appendices
+\include{./TeX_files/90_appendixA}
+%\include{./TeX_files/AppendixB}
+%\include{./TeX_files/AppendixC}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
-\nocite{*} % force all
+\part*{\bibname}		% start Bibiography part
+\nocite{*} 				% force to cite all entries
+
 \printbibliography[heading=bibintoc]
 
 
-\listoffigures     % Prints the list of figures
-\listoftables  	   % Prints the list of tables
-%\listofalgorithms % Prints the list of tables
-
-
-%----------------------------------------------------------------------------------------
-%	THESIS CONTENT - APPENDICES
-%----------------------------------------------------------------------------------------
-\appendix 			% Cue to tell LaTeX that the following "chapters" are Appendices
-% Uncomment the lines as you write the Appendices
-\include{./TeX_files/AppendixA}
-%\include{./TeX_files/AppendixB}
-%\include{./TeX_files/AppendixC}
-
-\makebackcover%
 \end{document}

@@ -93,7 +93,7 @@
 \RequirePackage{minitoc}			% table of contents per chapter
 \RequirePackage{epigraph}			% for epigraph
 \RequirePackage{varwidth}			% for epigraph
-
+\RequirePackage{titletoc}           % Customize TOC, LO?
 
 % ---
 % image / Lists / float related packages
@@ -104,6 +104,7 @@
 \RequirePackage{framed}         % Magic and simple boxes
 \RequirePackage{ntheorem}		% support for making a list of theorems, analagous to \listoffigures.
 \RequirePackage[inline]{enumitem}       % User control over the layout of the enumerate, itemize and description
+\RequirePackage[chapter]{algorithm}
 % ---
 % Fonts
 \RequirePackage{calligra}       % Required for dedicace page
@@ -115,10 +116,65 @@
 %----------------------------------------------------------------------------------------
 \AtEndPreamble{%
 	\RequirePackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-	%	\RequirePackage[babel,kerning]{microtype}
-}
+
+    \ifbool{hyperrefsupport}{% If the nohyperref class option has not been specified
+         \RequirePackage{hyperref}
+         \hypersetup{pdfpagemode={UseOutlines},
+            bookmarksopen=true,
+            bookmarksopenlevel=0,
+            hypertexnames=false,
+            colorlinks=false,% Set to false to disable coloring links
+            %%citecolor=magenta,% The color of citations
+            %%linkcolor=red,% The color of references to document elements (sections, figures, etc)
+            %%urlcolor=mdtRed,% The color of hyperlinks (URLs)
+            pdfstartview={FitV},
+            unicode,
+            hidelinks, %%%%%
+            pdfborder={0 0 0}, %%%%%
+            breaklinks=true,
+     }
+    }{}
+    \ifbool{cleverefsupport}{% If the noclevref class option has not been specified
+        \RequirePackage{cleveref}
+        %	\RequirePackage[babel,kerning]{microtype}
+     }{}
 
 %----------------------------------------------------------------------------------------
+% Fix polyglossie captions 
+%----------------------------------------------------------------------------------------
+% Table
+\renewcaptionname{french}{\tablename}{Tableau}                %Table
+
+% algorithm
+\newcaptionname{french}{\ALG@name}{Algorithme}                
+\newcaptionname{french}{\listalgorithmname}{Liste des algorithmes}
+
+% Summary
+\newcaptionname{french}{\Sum@name}{Sommaire}
+\newcaptionname{english}{\Sum@name}{Summary}
+
+\newcaptionname{french}{\algorithmicprocedure}{\textbf{procédure}}
+\newcaptionname{french}{\Not}{\textbf{non}\ }
+\newcaptionname{french}{\And}{\textbf{et}\ }
+\newcaptionname{french}{\Or}{\textbf{ou}\ }
+\newcaptionname{french}{\algorithmicrequire}{\textbf{Entrée:}}
+\newcaptionname{french}{\algorithmicensure}{\textbf{Sortie:}}
+%\newcaptionname{french}{\algorithmiccomment}[1]{\{#1\}}
+\newcaptionname{french}{\algorithmicend}{\textbf{fin}}
+\newcaptionname{french}{\algorithmicif}{\textbf{si}}
+\newcaptionname{french}{\algorithmicthen}{\textbf{alors}}
+\newcaptionname{french}{\algorithmicelse}{\textbf{sinon}}
+\newcaptionname{french}{\algorithmicfor}{\textbf{pour}}
+\newcaptionname{french}{\algorithmicforall}{\textbf{pour tout}}
+\newcaptionname{french}{\algorithmicdo}{\textbf{faire}}
+\newcaptionname{french}{\algorithmicwhile}{\textbf{tant que}}
+\newcaptionname{french}{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+\newcaptionname{french}{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\newcaptionname{french}{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+
+}
+%----------------------------------------------------------------------------------------
+\newcounter{socdepth}
 \newbool{parskip}
 \newbool{indentfirst}
 \newbool{draftmode}
@@ -126,6 +182,12 @@
 \newbool{nolistspace}
 \newbool{consistentlayout}
 \newbool{chapteroneline}
+\newbool{hyperrefsupport}
+\booltrue{hyperrefsupport} 
+\newbool{cleverefsupport}
+\booltrue{cleverefsupport} 
+\newbool{listtoc}
+\newbool{toctoc}
 %\newcounter{UBLupperchapter}
 %\newcounter{UBLuppersection}
 %\newcounter{UBLuppersubsection}
@@ -139,6 +201,12 @@
 \DeclareOption{headsepline}{\booltrue{headsepline}}
 \DeclareOption{nolistspacing}{\booltrue{nolistspace}}
 \DeclareOption{chapterinoneline}{\booltrue{chapteroneline}}
+\DeclareOption{nohyperref}{\boolfalse{hyperrefsupport}}
+\DeclareOption{nocleveref}{\boolfalse{cleverrefsupport}}
+\DeclareOption{liststotoc}{\booltrue{listtoc}}
+\DeclareOption{toctotoc}{\booltrue{toctoc}}
+
+
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
 \ProcessOptions\relax
@@ -151,9 +219,9 @@
 
 %---
 % CONDITIONAL PACKAGE LOADING
-\ifbool{parskip}{\RequirePackage{parskip} \message{CARALHO}} % If the parskip option is passed to the class, require the parskip package 
+\ifbool{parskip}{\RequirePackage{parskip}} % If the parskip option is passed to the class, require the parskip package 
 
-\ifbool{indentfirst}{\RequirePackage{indentfirst} \message{CARALHO2}} % If the indentfirst option is passed to the class, require the indentfirst package 
+\ifbool{indentfirst}{\RequirePackage{indentfirst}} % If the indentfirst option is passed to the class, require the indentfirst package 
 
 %----------------------------------------------------------------------------------------
 %	PAGE FORMATING
@@ -181,10 +249,12 @@
 }
 \raggedbottom 
 
-\setcounter{mtc}{2}  % before resume we have the ACKNOWLEDGEMENTS PAGE 
-\setcounter{minitocdepth}{1}
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3} % The depth to which the document sections are printed to the table of contents 0:chapter/1:section/2:subsection/3:subsubsection
+%\setcounter{mtc}{3}  % before resume we have the ACKNOWLEDGEMENTS PAGE 
+% The depth : 0:chapter/1:section/2:subsection/3:subsubsection
+\setcounter{minitocdepth}{1}  % summary of each chapter
+\setcounter{secnumdepth}{3}   % section numbering of each chapter
+\setcounter{tocdepth}{3}      % table of contents
+\setcounter{socdepth}{1}      % summary
 %\setcounter{lofdepth}{1}
 %\setcounter{lotdepth}{1}
 
@@ -208,9 +278,9 @@
 %----------------------------------------------------------------------------------------
 %  Simple interface for the user  to customize the chapter titles 
 %----------------------------------------------------------------------------------------
-\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{0pt}}
-\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{0pt}}
-\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{0pt}}
+\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{20pt}}
+\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{40pt}}
+\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{20pt}}
 \ProvideDocumentCommand{\autodot}{}{}
 \ProvideDocumentCommand{\mdtChapapp}{}{}
 \ProvideDocumentCommand{\chapteralign}{}{\raggedright}
@@ -249,8 +319,39 @@
 }
 
 
+
+\ifbool{listtoc}{% If the liststotoc option has been passed to the class, add the lists to the table of contents
+	\patchcmd{\listoftables}{\@starttoc{lot}}{%
+		\addchaptertocentry{\listtablename}\@starttoc{lot}%
+	}{}{}%
+	\patchcmd{\listoffigures}{\@starttoc{lof}}{%
+		\addchaptertocentry{\listfigurename}\@starttoc{lof}%
+	}{}{}%
+	\patchcmd{\listofalgorithms}{\@starttoc{loa}}{%
+	\addchaptertocentry{\listofalgorithms}\@starttoc{loa}%
+}{}{}%
+}
+
+
+\ifbool{toctoc}{% If the toctotoc options has been passed to the class, add the table of contents to the table of contents
+	\patchcmd{\tableofcontents}{\@starttoc{toc}%
+	}{%
+		\addchaptertocentry{\contentsname}\@starttoc{toc}}{}{}%
+}
+
+% --
+% Avoid \MakeUppercase in LO?
+% As LOA is now a "clone"of LOF, all modifications in LOF will be replied in LOA
+\patchcmd{\tableofcontents}{\MakeUppercase}{\MakeMarkcase}{}{}
+\patchcmd{\tableofcontents}{\MakeUppercase}{\MakeMarkcase}{}{}
+\patchcmd{\listoffigures}{\MakeUppercase}{\MakeMarkcase}{}{}
+\patchcmd{\listoffigures}{\MakeUppercase}{\MakeMarkcase}{}{}
+\patchcmd{\listoftables}{\MakeUppercase}{\MakeMarkcase}{}{}
+\patchcmd{\listoftables}{\MakeUppercase}{\MakeMarkcase}{}{}
+
 %---
 % Fix spacing
+%---
 % If the option `nolistspacing' is given, the spacing in the different lists is reduced to single spacing. This option is only useful, if the spacing of the document has been changed to onehalfspacing or doublespacing.
 \ifbool{nolistspace}{%
 	\patchcmd{\listoffigures}{%
@@ -274,7 +375,16 @@
 % ---
 % Comamand and hacks
 %----------------------------------------------------------------------------------------
-\newcommand*\MakeFUpperCase[1]{#1} % TODO: 
+
+%\usepackage{mfirstuc}
+
+
+\newcommand*\MakeFUpperCase[1]{{#1}} % TODO: 
+
+\NewDocumentCommand{\summary}{}{%
+	\shorttoc{\Sum@name}{\value{socdepth}}
+}
+
 
 \newcommand{\checktoopen}{% New command to move content to the next page which prints to the next odd page if twosided mode is active  
 	\if@openright\cleardoublepage\else\clearpage\fi
@@ -346,7 +456,7 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
     \begin{tikzpicture}
     % la boite
     \node[rectangle,draw=fondtitre!100,fill=fonddeboite!100,inner sep=10pt, inner ysep=20pt] (mabox)%
-        {\begin{minipage}{12cm}#2\end{minipage}};
+        {\begin{minipage}{0.57\paperwidth}#2\end{minipage}};
     % le titre de la boite
     \node[fill=fondtitre!100, text=white, rectangle] at (mabox.north) {\sffamily\textbf{#1}};
     \end{tikzpicture}
@@ -356,9 +466,9 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 % SIMPLE BOX
 %----------------------------------------------------------------------------------------
 \NewDocumentCommand{\simplebox}{+m}{%
-    \begin{center}\begin{minipage}{12cm}\begin{shaded}#1\end{shaded}\end{minipage}\end{center}
-}
+    \begin{center}\begin{minipage}{0.57\paperwidth}\begin{shaded}#1\end{shaded}\end{minipage}\end{center}}
 
+%
 \NewDocumentCommand{\tttypeout}{m}{\bhrule\typeout{\space\#1}\bhrule}
 \NewDocumentCommand{\bhrule}{}{\typeout{--------------------}}
 \newcommand{\decoRule}{\rule{.8\textwidth}{.4pt}} % New command for a rule to be used under figures
@@ -437,6 +547,18 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 	\addcontentsline{toc}{chapter}{#1}%
 }
 
+
+\titlecontents{figure}[2.0em]{}{\contentslabel{2.3em}}{}{\titlerule*[0.25pc]{.}\contentspage}{}
+\titlecontents{table}[2.0em]{}{\contentslabel{2.3em}}{}{\titlerule*[0.25pc]{.}\contentspage}{}
+\contentsuse{algorithm}{loa}
+\titlecontents{algorithm}[2.0em]{}{\contentslabel{2.3em}}{}{\titlerule*[0.25pc]{.}\contentspage}{}
+
+\let\listofalgorithms\listoftables
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
+\patchcmd{\listofalgorithms}{lot}{loa}{}{}
 
 
 
@@ -650,12 +772,12 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 % Keywords
 %----------------------------------------------------------------------------------------
 \NewDocumentCommand{\keywords}{m}{\newcommand{\keywordnames}{#1}}
-\NewDocumentCommand{\keywordsF}{m}{\newcommand{\keywordFnames}{#1}}
+\NewDocumentCommand{\motscles}{m}{\newcommand{\keywordFnames}{#1}}
 %----------------------------------------------------------------------------------------
 % Abstract
 %----------------------------------------------------------------------------------------
 \NewDocumentCommand{\abstract}{+m}{\newcommand{\abstractT}{#1}}
-\NewDocumentCommand{\abstractF}{+m}{\newcommand{\abstractTF}{#1}}
+\NewDocumentCommand{\resume}{+m}{\newcommand{\abstractTF}{#1}}
 %----------------------------------------------------------------------------------------
 % Author Name
 %----------------------------------------------------------------------------------------
@@ -674,6 +796,7 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 \RenewDocumentCommand{\title}{o m}{%
 	\IfValueTF{#1}{\def\shorttitle{#1}}{\def\shorttitle{#2}}%
 	\def\@title{#2}%
+	\def\@titleE{#2}%
 	\def\ttitle{#2}%
 }
 \newif\iftsubt
@@ -681,20 +804,21 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 \NewDocumentCommand{\subtitle}{o m}{%
 	\IfValueTF{#1}{\def\shortsubtitle{#1}}{\def\shortsubtitle{#2}}%
 	\def\@subtitle{#2}%
+	\def\@subtitleE{#2}%
 	\def\tsubtitle{#2}%
 	\tsubttrue   
 }
 %----------------------------------------------------------------------------------------
 % Thesis title and subtitle in foreign language
 %----------------------------------------------------------------------------------------
-\NewDocumentCommand{\titleF} {o m}{%
+\NewDocumentCommand{\titre} {o m}{%
 	\IfValueTF{#1}{\def\shorttitleF{#1}}{\def\shorttitleF{#2}}%
 	\def\@titleF{#2}%
 	\def\ttitleF{#2}%
 }
 \newif\iftsubtF
 \tsubtFfalse
-\NewDocumentCommand{\subtitleF} {o m}{%
+\NewDocumentCommand{\soustitre} {o m}{%
 	\IfValueTF{#1}{\def\shortsubtitleF{#1}}{\def\shortsubtitleF{#2}}%
 	\def\@subtitleF{#2}%
 	\def\tsubtitleF{#2}%
@@ -1149,7 +1273,6 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 		% JUST TO CLEAR ALL
 		\draw [draw=white,fill=white] (current page.north west) rectangle (current page.south east);
 		% BACKGROUND IMAGE
-		%\node[anchor=north] at (page cs:0,1){\includegraphics[width=\paperwidth]{\@abstractbackground}};
 		\node[anchor=center] at (current page.center){\includegraphics[height=\paperheight,width=\paperwidth]{\@abstractbackground}};%
 		% LOGO LEFT  
 		\node[anchor=north west] (FL) at (page cs:-0.8,0.93) {%
@@ -1193,12 +1316,12 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 		\node[text width=16.5cm, anchor=center] (RULE)  at (page cs:0,0.73)  {\textcolor{mathSTIC-Color}{\rule{\textwidth }{0.2cm}}
 		};
 		\node[st,text width=16.5cm, anchor=north, below = of RULE.center] (RESUME) {%at (page cs:0,0.54)   {
-			{\small\noindent\fontfamily{phv}\selectfont{{\bfseries\textcolor{mathSTIC-Color}{Titre}} : \ifcurrentbaselanguage{French}{\@title}{\@titleF}\iftsubtF\iflanguage{french}{ : \@subtitle}{ : \@subtitleF}\fi}\\[0.25cm]
-				\noindent{\bfseries Mots cl\'{e}s : }\ifcurrentbaselanguage{French}{\small\keywordnames}{\small\keywordFnames}
+			{\small\noindent\fontfamily{phv}\selectfont{{\bfseries\textcolor{mathSTIC-Color}{Titre}}\space: \@title\iftsubtF : \@subtitleF\fi}\\[0.25cm]
+				\noindent{\bfseries Mots cl\'{e}s : }\small\keywordFnames
 				\vspace{-0.25cm}
 				\begin{multicols}{2}
-				\noindent\textbf{R\'{e}sum\'{e} : }\ifcurrentbaselanguage{French}{%
-					\begin{otherlanguage}{french}\small{\abstractT}\end{otherlanguage}}{\small{\abstractTF}}%
+				\noindent\textbf{R\'{e}sum\'{e} : }
+					\begin{otherlanguage}{french}\small{\abstractTF}\end{otherlanguage}%
 				\end{multicols}%
 			}
 		};
@@ -1206,12 +1329,12 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 			\textcolor{mathSTIC-Color}{\rule{\textwidth }{0.2cm}}};
 		
 		\node[st,text width=16.5cm, anchor=north, below = of RULEB] (ABSTRACT) {%at (page cs:0,0.54)   {
-			{\small\noindent\fontfamily{phv}\selectfont{{\bfseries\textcolor{mathSTIC-Color}{Title}}: \ifcurrentbaselanguage{English}{\@title}{\@titleF}\iftsubt\ifcurrentbaselanguage{English}{: \tsubtitle}{: \tsubtitleF}\fi}\\[0.25cm]
-				\noindent{\bfseries Keywords: }\ifcurrentbaselanguage{English}{\small\keywordnames}{\small\keywordFnames}
+			{\small\noindent\fontfamily{phv}\selectfont{{\bfseries\textcolor{mathSTIC-Color}{Title}}: \@titleE\iftsubt: \@subtitleE\fi}\\[0.25cm]
+				\noindent{\bfseries Keywords: }\small\keywordnames
 				\vspace{-0.25cm}
 				\begin{multicols}{2}
-				\noindent\textbf{Abstract: }\ifcurrentbaselanguage{English}{\small{\abstractT}}{%
-					\begin{otherlanguage}{french}\small{\abstractTF}\end{otherlanguage}}
+				\noindent\textbf{Abstract: }%
+					\begin{otherlanguage}{english}\small{\abstractT}\end{otherlanguage}
 				\end{multicols}}
 		};
 		\end{tikzpicture}
@@ -1222,20 +1345,8 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 %----------------------------------------------------------------------------------------
 %	COVER BACK PAGE
 %----------------------------------------------------------------------------------------
-\def\makebackcoverI{%
-	\cleardoublepage%
-	%\pagenumbering{gobble}%
-	\pagestyle{empty}%
-	\ifodd\thepage % Now, is it odd? 
-	\null% 'fill` and clear again
-	\clearpage%
-	\fi
-	{%
-		\tikz[remember picture,overlay] \node[opacity=1,inner sep=0pt] at (current  page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{./cover/cover_end\covertypen.\@coverex}};
-	}%
-}%
-
 \def\makebackcover{%
+	\pagestyle{empty}%
 	\cleardoublepage%
 	%\pagenumbering{gobble}%
 	%\pagestyle{empty}%
@@ -1273,11 +1384,8 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS PAGE DESIGN
 %----------------------------------------------------------------------------------------
-
 \newcommand{\acknowledgementname}{Acknowledgements}
-\providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish} {\acknowledgementname}{Acknowledgements} % Acknowledgement text for English countries
-\providecaptionname{german,ngerman,austrian,naustrian}{\acknowledgementname}{Danksagung} % Acknowledgement text for Germanic countries
-\providecaptionname{french}{\acknowledgementname}{Remerciements} % Acknowledgement text for Germanic countries
+\providecaptionname{french}{\acknowledgementname}{Remerciements}
 
 \ifbool{consistentlayout}{%
 	\DeclareDocumentEnvironment{acknowledgements}{}{%
@@ -1299,25 +1407,103 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 }
 
 
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS PAGE DESIGN
+%----------------------------------------------------------------------------------------
+
+\newcommand{\abbrevname}{List of Abbreviations}
+\providecaptionname{english,british,american}{\abbrevname}{List of Abbreviations}
+\providecaptionname{french}{\abbrevname}{Liste des sigles}
+\NewDocumentEnvironment{abbreviations}{ m }{%
+	\ifbool{nolistspace}{\begingroup\singlespacing}{}
+	\ifbool{listtoc}{\addchap{\abbrevname}}{\addchap*{\abbrevname}}
+	\setlength\LTleft{0pt}
+	\setlength\LTright{0pt}
+	\begin{longtable}{@{\extracolsep{\fill}}#1@{}}
+	}{%
+	\end{longtable}
+	\addtocounter{table}{-1}% Don't count this table as one of the document tables
+	\ifbool{nolistspace}{\endgroup}{}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	PHYSICAL CONSTANTS PAGE DESIGN
+%----------------------------------------------------------------------------------------
+
+\newcommand{\constantsname}{Physical Constants}
+\providecaptionname{english,british,american}{\constantsname}{Physical Constants}
+\providecaptionname{french}{\constantsname}{Constantes}
+
+\NewDocumentEnvironment{constants}{ m }{%
+	\ifbool{nolistspace}{\begingroup\singlespacing}{}
+	\ifbool{listtoc}{\addchap{\constantsname}}{\addchap*{\constantsname}}
+	\begin{longtable}{@{\extracolsep{\fill}}#1@{}}
+	}{%
+	\end{longtable}
+	\addtocounter{table}{-1}% Don't count this table as one of the document tables
+	\ifbool{nolistspace}{\endgroup}{}
+}
+
+%----------------------------------------------------------------------------------------
+%	SYMBOLS PAGE DESIGN
+%----------------------------------------------------------------------------------------
+
+\newcommand{\symbolsname}{List of Symbols}
+\providecaptionname{english,british,american}{\symbolsname}{List of Symbols}
+\providecaptionname{french}{\symbolsname}{Nomenclature}
+
+
+\NewDocumentEnvironment{symbols}{ m }{%
+	\ifbool{nolistspace}{\begingroup\singlespacing}{}
+	\ifbool{listtoc}{\addchap{\symbolsname}}{\addchap*{\symbolsname}}
+	\begin{longtable}{@{\extracolsep{\fill}}#1@{}}
+	}{%
+	\end{longtable}
+	\addtocounter{table}{-1}% Don't count this table as one of the document tables
+	\ifbool{nolistspace}{\endgroup}{}
+}
+
+
 
 %\newcommand{\url}[1]{%
 %\expandafter\string\csname #1\endcsname}
 
 % FIX PDF
 \ifx\pdfoutput\undefined
-% not running pdfTeX
+    % not running pdfTeX
 \else
-\ifx\pdfoutput\relax
-% not running pdfTeX
-\else
-% running pdfTeX, with...
-\ifnum\pdfoutput>0
-\pdfminorversion=7
-\pdfobjcompresslevel=2
-\else
-% DVI output
+    \ifx\pdfoutput\relax
+        % not running pdfTeX
+    \else
+        % running pdfTeX, with...
+        \ifnum\pdfoutput>0
+            \pdfminorversion=7
+            \pdfobjcompresslevel=2
+            % If there is an explicit linebreak in a section heading (or anything printed to the pdf- bookmarks), it is replaced by a space
+            %\pdfstringdefDisableCommands{\let\\\space}
+        \else
+            % DVI output
+        \fi
+    \fi
 \fi
-\fi
-\fi
+
+\AtBeginDocument{%
+	\ifcurrentbaselanguage{French}{
+	\renewcommand{\@title}{\@titleF}
+	\renewcommand{\@subtitle}{\@subtitleF}
+	\message{FRENCH}
+	}{\message{NOT FRENCH}}
+}
+
+
+\AtEndDocument{%
+\makebackcover
+}
+
+% disable page counter reseting.
+\renewcommand\mainmatter{
+	\@mainmattertrue\cleardoublepage\renewcommand\thepage{\arabic{page}}}
+
 
 \endinput

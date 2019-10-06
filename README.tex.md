@@ -1,2 +1,3 @@
 # MathSTIC-UBL LaTeX Class
-$\LaTeX$  Class for the Doctoral Thesis from the MathSTIC Doctoral School / Université Bretagne Loire.
+$\LaTeX$  PhD thesis template for the _Université Bretagne Loire_ (UBL) MathSTIC Doctoral School.
+
