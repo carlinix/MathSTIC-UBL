@@ -66,26 +66,26 @@ To fill the front and back cover is really easy. Considering the as base the fil
   -`\date{}`: Your defenses date (in French)
   
   -`\president[Gender]{Name}{Surname}{Function --- establishment}`:
-      -Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if President or Presidente.
-      -Name: The first name
-      -Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-      -Function --- establishment:
+  - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if President or Presidente.
+  - Name: The first name
+  - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
+  - Function --- establishment:
   
   -`\rapporteur[Gender]{Name}{Surname}{}`  (one entry per rapporteur):
-      - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Rapporteur or Rapportrice.
-      - Name: The first name
-      - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-      - Function --- establishment:
+  - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Rapporteur or Rapportrice.
+  - Name: The first name
+  - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
+  - Function --- establishment:
 
   -`\examinateur[Gender]{Name}{Surname}{}`  (one entry per examinateur):
-      - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Examinateur or Examinatrice.
-      - Name: The first name
-      - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-      - Function --- establishment:
+  - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Examinateur or Examinatrice.
+  - Name: The first name
+  - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
+  - Function --- establishment:
         
   -`\invite[Gender]{Name}{Surname}{}`  (one entry per invite): if you don't have any guest, remove or comment this entry
-      - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Invité or Invitée.
-      - Name: The first name
-      - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-      - Function --- establishment:
+  - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Invité or Invitée.
+  - Name: The first name
+  - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
+  - Function --- establishment:
     
