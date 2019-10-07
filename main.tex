@@ -12,19 +12,20 @@ headsepline,       % Uncomment to get a line under the header
 %chapterinoneline, % Uncomment to place the chapter title next to the number on one line
 %consistentlayout, % Uncomment to change the layout of the declaration, abstract and 
                    % acknowledgements pages to match the default layout
-liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
-toctotoc, % Uncomment to add the main table of contents to the table of contents
-%		
+liststotoc,		   % Uncomment to add the list of figures/tables/etc to the table of contents
+toctotoc,          % Uncomment to add the main table of contents to the table of contents
+%
 % -----------------
 % LANGUAGE SETUP <--- LOOK AT ME I'M VERY IMPORTANT!	
 % -----------------	
-%{french,english},  % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN ENGLISH
-{english,french}, % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN FRENCH
-% -----------------
+{french,english},  % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN ENGLISH
+%{english,french}, % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN FRENCH 
+ -----------------
 % EXTRA RESOURCES
 % -----------------	
-nocleverefsupport, % Uncomment to not load the  clevref package (\Cref and \cref)
-nohyperrefsupport, % Uncomment to not load the hyperref package
+%nocleverefsupport, % Uncomment to not load the  clevref package (\Cref and \cref)
+%nohyperrefsupport, % Uncomment to not load the hyperref package
+%noacro,               % Uncomment to not load the acro package
 % -----------------
 % FOR DEBUGING     
 % -----------------    
@@ -157,18 +158,28 @@ nohyperrefsupport, % Uncomment to not load the hyperref package
 %----------------------------------------------------------------------------------------
 
 
-\usepackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+
+
 \addbibresource{example.bib} % The filename of the bibliography
+%----------------------------------------------------------------------------------------1
+% PUT HERE YOUR EXTRA PACKAGES
+%----------------------------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+%  The document structure begins here!
+%----------------------------------------------------------------------------------------
 \begin{document}
 \frontmatter%		 % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 \maketitle%			 % make the cover 
-
-
 \pagestyle{plain}	 % Default to the plain heading style until the thesis style is called for the body content
 %----------------------------------------------------------------------------------------
 %	QUOTATION PAGE
 %----------------------------------------------------------------------------------------
 \makequotation{Moving on, is a simple thing, what it leaves behind is hard}{Dave Mustaine}{\`{A} Tout le Monde}
+%
 %----------------------------------------------------------------------------------------
 %	DEDICATION
 %----------------------------------------------------------------------------------------
@@ -177,14 +188,15 @@ nohyperrefsupport, % Uncomment to not load the hyperref package
 %----------------------------------------------------------------------------------------
 %	Acknowledgements
 %----------------------------------------------------------------------------------------
-\include{./TeX_files/04_acknowledgements}
-
+\include{./appendices/acknowledgements}
+\dominitoc
 \setcounter{mtc}{2}   % To fix the minitoc content (before Résumé Étendú we have the acknow.)
 %----------------------------------------------------------------------------------------
 %	Resume Etendu en Francais (only if your thesis is in English)
 %----------------------------------------------------------------------------------------
-\include{./TeX_files/06_resume_francais}
-
+\ifcurrentbaselanguage{English}{%
+	\include{./chapters/00_resume_francais}
+}{}
 %----------------------------------------------------------------------------------------
 %	Table pf contents
 %----------------------------------------------------------------------------------------
@@ -204,38 +216,48 @@ nohyperrefsupport, % Uncomment to not load the hyperref package
 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
-\include{./TeX_files/10_chapter1}
-\include{./TeX_files/20_chapter2}
-%\include{./TeX_files/03_chapter} 
-%\include{./TeX_files/04_chapter} 
-%\include{./TeX_files/05_chapter} 
+\include{./chapters/chapter1}
+\include{./chapters/chapter2}
+%\include{./chapters/chapter3} 
+%\include{./chapters/chapter4} 
+%\include{./chapters/chapter5} 
  
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
-\backmatter
+%\backmatter
 \tableofcontents   % Prints the main table of contents
 \listoffigures     % Prints the list of figures
 \listoftables  	   % Prints the list of tables
 \listofalgorithms  % Prints the list of tables
-\include{./TeX_files/00_symbols}	   % list of symbols
-\include{./TeX_files/01_constants}     % list of constants
-\include{./TeX_files/02_abbreviations} % list of abbreviations
+\include{./appendices/symbols}	   % list of symbols
+\include{./appendices/constants}     % list of constants
+
+% USING acro package content are in ./acro-def.tex
+\ifbool{acrosupport}{%
+    \printacronyms
+}{% ELSE
+	\include{./appendices/abbreviations} % list of abbreviations
+}
 
 % Uncomment the lines as you write the Appendices
-\part*{Appendices}
+\addpart{Appendices}
 \appendix 			% Cue to tell LaTeX that the following "chapters" are Appendices
-\include{./TeX_files/90_appendixA}
-%\include{./TeX_files/AppendixB}
-%\include{./TeX_files/AppendixC}
+\include{./appendices/appendixA}
+%\include{./appendices/appendixB}
+%\include{./appendices/appendixC}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
-\part*{\bibname}		% start Bibiography part
+\addpart{\bibname}		% start Bibiography part
 \nocite{*} 				% force to cite all entries
 
-\printbibliography[heading=bibintoc]
+%\printbibliography[heading=bibintoc]
+% nocite: In order to cite all the references included biblio
 
+\printbibliography[heading=primary,keyword=primary]
+\newpage
+\printbibliography[heading=secondary,keyword=secondary]
 
 \end{document}

@@ -33,7 +33,8 @@
 %%  Florent de Dinechin 1997
 %%
 %% 3. these-ubl.cls 18/04/2018 v4.0 by 
-%%  L.YALA
+%%   Louiza Yala (2018-), 
+%%   Pierre-Louis Roman (2019-)
 %%
 %% 4. abntex2.cls by
 %%  Lauro César Araujo
@@ -115,8 +116,6 @@
 % THOSE PACKAGES MUST BE LOAD AT THE END
 %----------------------------------------------------------------------------------------
 \AtEndPreamble{%
-	\RequirePackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-
     \ifbool{hyperrefsupport}{% If the nohyperref class option has not been specified
          \RequirePackage{hyperref}
          \hypersetup{pdfpagemode={UseOutlines},
@@ -132,45 +131,76 @@
             hidelinks, %%%%%
             pdfborder={0 0 0}, %%%%%
             breaklinks=true,
-     }
-    }{}
+     	}
+ 		%\RequirePackage[style=verbose-trad1,hyperref,backend=biber,natbib=true]{biblatex}
+    }{% NO hyperref
+    	%\RequirePackage[style=verbose-trad1,backend=biber,natbib=true]{biblatex}
+	}
     \ifbool{cleverefsupport}{% If the noclevref class option has not been specified
         \RequirePackage{cleveref}
         %	\RequirePackage[babel,kerning]{microtype}
      }{}
+     \ifbool{acrosupport}{% If the noclevref class option has not been specified
+     	\ifbool{hyperrefsupport}{
+ 			\RequirePackage[hyperref]{acro}
+ 		}{\RequirePackage[hyperref]{acro}}
+		\DeclareAcroListStyle{UBLStyle}{table}{
+		table = longtable,
+		table-spec = {@{\extracolsep{\fill}}@{}p{50pt}@{}p{250pt}@{}}% {@{}p{50pt}@{}p{250pt}} 	
+		}
+		\ifbool{listtoc}{
+			\acsetup{list-style=UBLStyle,
+			list-heading=addchap,
+			list-name = {\abbrevname}
+			}
+		}{% ELSE
+			\acsetup{list-style=UBLStyle,
+			list-heading=chapter*,
+			list-name = {\abbrevname}
+			}	
+		
+		}
+		\input{./acro-def.tex}
+ 	}{}
+ 	%	\RequirePackage[babel,kerning]{microtype}
+ 
+ 
 
-%----------------------------------------------------------------------------------------
-% Fix polyglossie captions 
-%----------------------------------------------------------------------------------------
-% Table
-\renewcaptionname{french}{\tablename}{Tableau}                %Table
+ 
+	%----------------------------------------------------------------------------------------
+	% Fix polyglossie captions 
+	%----------------------------------------------------------------------------------------
+	% Table
+	\renewcaptionname{french}{\tablename}{Tableau}                %Table
+	
+	% algorithm
+	\newcaptionname{french}{\ALG@name}{Algorithme}                
+	\newcaptionname{french}{\listalgorithmname}{Liste des algorithmes}
+	
+	% Summary
+	\newcaptionname{french}{\Sum@name}{Sommaire}
+	\newcaptionname{english}{\Sum@name}{Summary}
+	
+	\newcaptionname{french}{\algorithmicprocedure}{\textbf{procédure}}
+	\newcaptionname{french}{\Not}{\textbf{non}\ }
+	\newcaptionname{french}{\And}{\textbf{et}\ }
+	\newcaptionname{french}{\Or}{\textbf{ou}\ }
+	\newcaptionname{french}{\algorithmicrequire}{\textbf{Entrée:}}
+	\newcaptionname{french}{\algorithmicensure}{\textbf{Sortie:}}
+	%\newcaptionname{french}{\algorithmiccomment}[1]{\{#1\}}
+	\newcaptionname{french}{\algorithmicend}{\textbf{fin}}
+	\newcaptionname{french}{\algorithmicif}{\textbf{si}}
+	\newcaptionname{french}{\algorithmicthen}{\textbf{alors}}
+	\newcaptionname{french}{\algorithmicelse}{\textbf{sinon}}
+	\newcaptionname{french}{\algorithmicfor}{\textbf{pour}}
+	\newcaptionname{french}{\algorithmicforall}{\textbf{pour tout}}
+	\newcaptionname{french}{\algorithmicdo}{\textbf{faire}}
+	\newcaptionname{french}{\algorithmicwhile}{\textbf{tant que}}
+	\newcaptionname{french}{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+	\newcaptionname{french}{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+	\newcaptionname{french}{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
 
-% algorithm
-\newcaptionname{french}{\ALG@name}{Algorithme}                
-\newcaptionname{french}{\listalgorithmname}{Liste des algorithmes}
-
-% Summary
-\newcaptionname{french}{\Sum@name}{Sommaire}
-\newcaptionname{english}{\Sum@name}{Summary}
-
-\newcaptionname{french}{\algorithmicprocedure}{\textbf{procédure}}
-\newcaptionname{french}{\Not}{\textbf{non}\ }
-\newcaptionname{french}{\And}{\textbf{et}\ }
-\newcaptionname{french}{\Or}{\textbf{ou}\ }
-\newcaptionname{french}{\algorithmicrequire}{\textbf{Entrée:}}
-\newcaptionname{french}{\algorithmicensure}{\textbf{Sortie:}}
-%\newcaptionname{french}{\algorithmiccomment}[1]{\{#1\}}
-\newcaptionname{french}{\algorithmicend}{\textbf{fin}}
-\newcaptionname{french}{\algorithmicif}{\textbf{si}}
-\newcaptionname{french}{\algorithmicthen}{\textbf{alors}}
-\newcaptionname{french}{\algorithmicelse}{\textbf{sinon}}
-\newcaptionname{french}{\algorithmicfor}{\textbf{pour}}
-\newcaptionname{french}{\algorithmicforall}{\textbf{pour tout}}
-\newcaptionname{french}{\algorithmicdo}{\textbf{faire}}
-\newcaptionname{french}{\algorithmicwhile}{\textbf{tant que}}
-\newcaptionname{french}{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
-\newcaptionname{french}{\algorithmicendif}{\algorithmicend\ \algorithmicif}
-\newcaptionname{french}{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+	\RequirePackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
 }
 %----------------------------------------------------------------------------------------
@@ -188,6 +218,8 @@
 \booltrue{cleverefsupport} 
 \newbool{listtoc}
 \newbool{toctoc}
+\newbool{acrosupport}
+\booltrue{acrosupport} 
 %\newcounter{UBLupperchapter}
 %\newcounter{UBLuppersection}
 %\newcounter{UBLuppersubsection}
@@ -203,6 +235,7 @@
 \DeclareOption{chapterinoneline}{\booltrue{chapteroneline}}
 \DeclareOption{nohyperref}{\boolfalse{hyperrefsupport}}
 \DeclareOption{nocleveref}{\boolfalse{cleverrefsupport}}
+\DeclareOption{noacro}{\boolfalse{acrosupport}}
 \DeclareOption{liststotoc}{\booltrue{listtoc}}
 \DeclareOption{toctotoc}{\booltrue{toctoc}}
 
@@ -211,7 +244,31 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
 \ProcessOptions\relax
 
-\RequirePackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+% I don't know why this need to be after the ProcessOptions command.
+%\RequirePackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\ifbool{hyperrefsupport}{%
+	\RequirePackage[style=verbose-trad1,hyperref,backend=biber,natbib=true]{biblatex}
+}{%
+	\RequirePackage[style=verbose-trad1,backend=biber,natbib=true]{biblatex}
+}
+
+\newcommand{\bibheadingnameP}{Primary Sources}
+\newcommand{\bibheadingnameS}{Secundary Sources}
+\providecaptionname{english,british,american}{\bibheadingnameP}{Primary Sources}
+\providecaptionname{french}{\bibheadingnameP}{Sources primaires}
+\providecaptionname{english,british,american}{\bibheadingnameS}{Secondary Sources}
+\providecaptionname{french}{\bibheadingnameS}{Sources secondaires}
+
+\defbibheading{primary}{\addsec{\bibheadingnameP}} % Categorie (sous forme de section) pour le tri de la bibliographie.
+\defbibheading{secondary}{\addsec{\bibheadingnameS}} % Categorie (sous forme de section) pour le tri de la bibliographie.
+
+\renewcommand*{\newunitpunct}{\addcomma\space} % Virgule entre les parties d'une reference (merci a Josquin Debaz)
+% Et pour mettre le in en italique dans la ref\'{e}rence biblio (merci encore \`{a} Josquin Debaz)
+\DefineBibliographyStrings{english}{%
+	in = {\emph{in}}%
+}
+
+
 
 %----------------------------------------------------------------------------------------
 %	CLASS OPTIONS
@@ -391,8 +448,8 @@
 	\ifdef{\phantomsection}{\phantomsection}{}% The \phantomsection command is necessary for hyperref to jump to the correct page
 }
 
-\NewDocumentCommand{\urmstic}{}{%
-Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{C}-{UBL} \classversion
+\NewDocumentCommand{\ublmstic}{}{%
+Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 }
 % --------------------------------------------------------------------------------------------
 % make \footnote and \url robust commands, needs package `etoolbox':
@@ -477,6 +534,21 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 	\addcontentsline{toc}{chapter}{#1}%
 }
 
+% Addchap provides unnumbered chapters with an entry in the table of contents as well as an updated header
+\ProvideDocumentCommand{\addpart}{s o m}{%
+	\part*{#3}%
+	\markboth{}{}%
+	\IfBooleanTF{#1}{%
+	}{%
+		\IfNoValueTF{#2}{%
+			\addcontentsline{toc}{part}{#3}%
+			\markboth{\MakeMarkcase{#3}}{\MakeMarkcase{#3}}%
+		}{%
+			\addcontentsline{toc}{part}{#3}%
+			\markboth{\MakeMarkcase{#2}}{\MakeMarkcase{#2}}%
+		}%
+	}%
+}%
 
 % Addchap provides unnumbered chapters with an entry in the table of contents as well as an updated header
 \ProvideDocumentCommand{\addchap}{s o m}{%
@@ -1263,6 +1335,7 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 	%	\addchap*{\abstractname}
 	
 	%	\iflanguage{french}{\run@renchtrue}{\run@frenchfalse}
+	\addchap{Résumé/Abstract}
 	\begin{spacing}{1.0}  %  always one spacing
 		\begin{tikzpicture}[%
 		remember picture,%
@@ -1316,7 +1389,7 @@ Math\raisebox{.15ex}{S}\raisebox{-.15ex}{T}\raisebox{.15ex}{I}\raisebox{-.15ex}{
 		\node[text width=16.5cm, anchor=center] (RULE)  at (page cs:0,0.73)  {\textcolor{mathSTIC-Color}{\rule{\textwidth }{0.2cm}}
 		};
 		\node[st,text width=16.5cm, anchor=north, below = of RULE.center] (RESUME) {%at (page cs:0,0.54)   {
-			{\small\noindent\fontfamily{phv}\selectfont{{\bfseries\textcolor{mathSTIC-Color}{Titre}}\space: \@title\iftsubtF : \@subtitleF\fi}\\[0.25cm]
+			{\small\noindent\fontfamily{phv}\selectfont{{\bfseries\textcolor{mathSTIC-Color}{Titre}}\space: \@titleF\iftsubtF : \@subtitleF\fi}\\[0.25cm]
 				\noindent{\bfseries Mots cl\'{e}s : }\small\keywordFnames
 				\vspace{-0.25cm}
 				\begin{multicols}{2}
