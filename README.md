@@ -14,8 +14,7 @@ The class provides the cover and back cover, according to the [MathSTIC specific
 Also, the policy of fonts, paragraphs, page numbering and margins, too, the style of elements positioning (summary, list of items, appendix, bibliography) defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats).
 
 ## Multilanguage support
-The class is multilanguage, wheen you specifythe option `{french,english}` the class expects an English thesis, and actives the _Résumé Étendú_ chapter. Otherwise, if the option is `{english,french}` the class expects a French thesis.
-In the case of the French thesis, the class automatically translates the package `algorithmc` to French.
+The class is multilanguage. When you specify the option `{french,english}` the class expects an English thesis, and actives the _Résumé Étendú_ chapter. Otherwise, if the option is `{english,french}` the class expects a French thesis, so it  disables the _Résumé Étendú_ chapter, and automatically translates the package `algorithmc` to French.
 
 
 ## Fill the front and back cover
