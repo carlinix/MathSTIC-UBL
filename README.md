@@ -13,6 +13,11 @@ The main goal of this template is to provide a full automatization of the $\LaTe
 The class provides the cover and back cover, according to the [MathSTIC specifications](https://web.u-bretagneloire.fr/doctorat/couverture/accordeon4.html#). It provides simple commands to fill all items in the cover (and back cover) as specified in the _[guide pour compléter les champs]_(https://web.u-bretagneloire.fr/doctorat/couverture/pdf/Couverture_infosObligatoires20160706.pdf).
 Also, the policy of fonts, paragraphs, page numbering and margins, too, the style of elements positioning (summary, list of items, appendix, bibliography) defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats).
 
+## Multilanguage support
+The class is multilanguage, wheen you specifythe option `{french,english}` the class expects an English thesis, and actives the _Résumé Étendú_ chapter. Otherwise, if the option is `{english,french}` the class expects a French thesis.
+In the case of the French thesis, the class automatically translates the package `algorithmc` to French.
+
+
 ## Fill the front and back cover
 To fill the front and back cover is really easy. Considering the as base the file `main.tex` provided in the template, you need only to fill the commands:
 * About you:
