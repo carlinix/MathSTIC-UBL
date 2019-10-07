@@ -8,7 +8,7 @@
 
 This repository contains an 'unofficial' template for the thesis manuscript of the [MathSTIC doctoral school](https://ed-mathstic.u-bretagneloire.fr/en) of the [Université Bretagne Loire](https://en.u-bretagneloire.fr/).
 
-The main goal of this template is to provide a full automatization of the $\LaTeX$-related tasks. Basically, you need only to focus on writing your thesis, is it cool, no?
+The main goal of this template is to provide a full automatization of the <img src="/tex/87181ad2b235919e0785dee664166921.svg?invert_in_darkmode&sanitize=true" align=middle width=45.69716744999999pt height=22.465723500000017pt/>-related tasks. Basically, you need only to focus on writing your thesis, is it cool, no?
 
 The class provides the cover and back cover, according to the [MathSTIC specifications](https://web.u-bretagneloire.fr/doctorat/couverture/accordeon4.html#). It provides simple commands to fill all items in the cover (and back cover) as specified in the _[guide pour compléter les champs]_(https://web.u-bretagneloire.fr/doctorat/couverture/pdf/Couverture_infosObligatoires20160706.pdf).
 Also, the policy of fonts, paragraphs, page numbering and margins, too, the style of elements positioning (summary, list of items, appendix, bibliography) defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats).
