@@ -1,4 +1,4 @@
-# MathSTIC-Math{STIC}-UBL LaTeX Class
+# MathSTIC-UBL LaTeX Class
 $\LaTeX$  PhD thesis template for the _Université Bretagne Loire_ (UBL) MathSTIC Doctoral School.
 
 [Link dowload release 1.0](https://drive.google.com/file/d/1IIVfScDHspFUg2VBp6xcxnW2f0m97jD4/view?usp=sharing)
@@ -93,3 +93,51 @@ To fill the front and back cover is really easy. Considering the as base the fil
   - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
   - Function --- establishment:
     
+  # Extra commands:
+   -`\makequotation{Phrase}{Author}{Where}`
+  
+   -`\dedicatory{To someone} 
+   
+   -`\addpart{Title}`
+   
+   -`\addchap{Title}`
+   
+   -`\addsec{Title}`
+   
+   -`\addsubsec{Title}`
+   
+   -`\addsubsubsec{Title}`
+   
+   -`\epigraph{Quote}{Author}`
+
+   -`\magicbox{Title of my box}{content}`
+   
+   -`\simplebox{Title of my box}{content}`
+   
+   -`\ublmstic`: writes $\mathrm{MathSTIC-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}}$
+   
+## Class options:
+To change the document layout, remember. By defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats), the options a4paper, 12pt, onehalfspacing, indentfirst and parkskip are mandatory.
+
+- To change the document layout:
+- _`papersize`_:  a4paper, letter, etc.;
+- _`fontsize`_: 12pt, 10pt, 11pt;  
+- _`linespacing`_: onehalfspacing, singlespacing, doublespacing
+- `nolistspacing`: If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists (TOC, LO?) to single
+- `indentfirst`:  To indent the first paragraph of each chapter/section/etc. 
+- `parskip`: To add space between paragraphs
+- `headsepline`: To get a line under the header
+- `chapterinoneline`: To place the chapter title next to the number on one line
+- `consistentlayout`: To change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+- `liststotoc`:	To add the list of figures/tables/etc to the table of contents
+- `toctotoc`: To add the main table of contents to the table of contents
+- `nocleverefsupport`: to not load the  [cleveref](http://tug.ctan.org/tex-archive/macros/latex/contrib/cleveref/cleveref.pdf) package. (\Cref and \cref)
+- `nohyperrefsupport`: to not load the [hyperref](http://ctan.mines-albi.fr/macros/latex/contrib/hyperref/doc/manual.pdf) package.
+- `noacro`: to not load the [acro](http://distrib-coffee.ipsl.jussieu.fr/pub/mirrors/ctan/macros/latex/contrib/acro/acro_en.pdf) package.
+- `draft`: to enable the draft mode (no pictures, no links, overfull hboxes indicated)
+
+The language setup is defined by one of the following options:
+
+- `{french,english}`: Use if you are **writting your thesis in English**
+- `{english,french}`: Use if you are **writting your thesis in French** 
+
