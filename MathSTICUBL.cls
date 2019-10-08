@@ -60,11 +60,9 @@
  						  % ways of implementing some LATEX kernel commands;
  						  % in special \AtEndPreamble and \AtBeginDocument
 \RequirePackage{xparse}   % replacement for LATEX2ε’s \newcommand macro, with significantly
-                          % improved functionality.
-                          
+                          % improved functionality.                          
 \RequirePackage{ifthen}
                           
-
 % Language related packages
 \RequirePackage{babel}    % Required for automatically changing names of document elements
                           % to languages besides english
@@ -72,14 +70,12 @@
                           % language-dependent names of sections/document elements
 \RequirePackage{translations} 
 % ---
-
 % Table related packages
 \RequirePackage{longtable} % Required for tables that span multiple pages (used in the
                            % symbols, abbreviations and physical constants pages)
 \RequirePackage{booktabs}  % Required for better table rules
 \RequirePackage{multirow}  % flexibility, including an option for specifying an entry at the “natural” width of its text.
 % ---
-
 % Layout related packages
 \RequirePackage{geometry}
 \RequirePackage{setspace} 
@@ -90,25 +86,35 @@
 \RequirePackage{multicol}			 % Required for abstract page
 \RequirePackage[table,xcdraw]{xcolor} % used to color fonts and tables.
 \RequirePackage[bottom]{footmisc}   % force footnote to the page's botton
-\RequirePackage{shorttoc}			% short table of contents
-\RequirePackage{minitoc}			% table of contents per chapter
-\RequirePackage{epigraph}			% for epigraph
-\RequirePackage{varwidth}			% for epigraph
-\RequirePackage{titletoc}           % Customize TOC, LO?
+ %
+ % This is really ugly, but this patch needs to be applied before minitoc and shorttoc.
+ % Fix the absence of gap between chapters in the LOA. Now LOA, LOT, and LAF have the same aspect.
+ \patchcmd{\@chapter}% <cmd>
+   {\chaptermark{#1}}% <search>
+   {\chaptermark{#1}%
+    \addtocontents{loa}{\protect\addvspace{10\p@}}}% replace
+   {}{}% <success><failure>
+%
+\RequirePackage{shorttoc}		% short table of contents
+\RequirePackage{minitoc}		% table of contents per chapter
+\RequirePackage{epigraph}		% for epigraph
+\RequirePackage{varwidth}		% for epigraph
+\RequirePackage{titletoc}     		% Customize TOC, LO?
 
 % ---
 % image / Lists / float related packages
-\RequirePackage{graphicx} 		% Required to include images
+\RequirePackage{graphicx} 	% Required to include images
 \graphicspath{{Figures/}{./}}   % Specifies where to look for included images
-\RequirePackage{tikz} 			% Required for cover page, abtract page, etc.
+\RequirePackage{tikz} 		% Required for cover page, abtract page, etc.
 \usetikzlibrary{positioning,calc}
-\RequirePackage{framed}         % Magic and simple boxes
+\RequirePackage{framed}         	% Magic and simple boxes
 \RequirePackage{ntheorem}		% support for making a list of theorems, analagous to \listoffigures.
 \RequirePackage[inline]{enumitem}       % User control over the layout of the enumerate, itemize and description
-\RequirePackage[chapter]{algorithm}
+\RequirePackage[chapter]{algorithm}	% Provides the algorithm environment
 % ---
 % Fonts
 \RequirePackage{calligra}       % Required for dedicace page
+\RequirePackage{amssymb}	% Math symbols
 \RequirePackage{amsmath}        % The principal package in the AMS-LATEX
 \RequirePackage{textcomp}       % he package supports the Text Companion fonts, which provide many text symbols 
 
@@ -132,23 +138,22 @@
             pdfborder={0 0 0}, %%%%%
             breaklinks=true,
      	}
- 		%\RequirePackage[style=verbose-trad1,hyperref,backend=biber,natbib=true]{biblatex}
-    }{% NO hyperref
-    	%\RequirePackage[style=verbose-trad1,backend=biber,natbib=true]{biblatex}
-	}
+ 		
+    }{% NO hyperref    	
+    }
     \ifbool{cleverefsupport}{% If the noclevref class option has not been specified
         \RequirePackage{cleveref}
         %	\RequirePackage[babel,kerning]{microtype}
      }{}
      \ifbool{acrosupport}{% If the noclevref class option has not been specified
-     	\ifbool{hyperrefsupport}{
+     	\ifbool{hyperrefsupport}{%
  			\RequirePackage[hyperref]{acro}
  		}{\RequirePackage[hyperref]{acro}}
-		\DeclareAcroListStyle{UBLStyle}{table}{
+		\DeclareAcroListStyle{UBLStyle}{table}{%
 		table = longtable,
 		table-spec = {@{\extracolsep{\fill}}@{}p{50pt}@{}p{250pt}@{}}% {@{}p{50pt}@{}p{250pt}} 	
 		}
-		\ifbool{listtoc}{
+		\ifbool{listtoc}{%
 			\acsetup{list-style=UBLStyle,
 			list-heading=addchap,
 			list-name = {\abbrevname}
@@ -239,11 +244,13 @@
 \DeclareOption{liststotoc}{\booltrue{listtoc}}
 \DeclareOption{toctotoc}{\booltrue{toctoc}}
 
-
-
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
 \ProcessOptions\relax
 
+
+%----------------------------------------------------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
 % I don't know why this need to be after the ProcessOptions command.
 %\RequirePackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 \ifbool{hyperrefsupport}{%
@@ -251,7 +258,6 @@
 }{%
 	\RequirePackage[style=verbose-trad1,backend=biber,natbib=true]{biblatex}
 }
-
 \newcommand{\bibheadingnameP}{Primary Sources}
 \newcommand{\bibheadingnameS}{Secundary Sources}
 \providecaptionname{english,british,american}{\bibheadingnameP}{Primary Sources}
@@ -267,7 +273,7 @@
 \DefineBibliographyStrings{english}{%
 	in = {\emph{in}}%
 }
-
+%----------------------------------------------------------------------------------------
 
 
 %----------------------------------------------------------------------------------------
@@ -429,12 +435,11 @@
 }{}
 %----------------------------------------------------------------------------------------
 
-% ---
+%----------------------------------------------------------------------------------------
 % Comamand and hacks
 %----------------------------------------------------------------------------------------
 
 %\usepackage{mfirstuc}
-
 
 \newcommand*\MakeFUpperCase[1]{{#1}} % TODO: 
 
@@ -457,9 +462,9 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 %\robustify\url
 
 
-
-% epigrafe
-
+%----------------------------------------------------------------------------------------
+% EPIGRAPH
+%----------------------------------------------------------------------------------------
 \renewcommand{\epigraphsize}{\small}
 \renewcommand{\textflush}{flushright}
 \renewcommand{\sourceflush}{flushright}
@@ -499,11 +504,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			\end{\epigraphflush}
 			\vspace{\afterepigraphskip}}
 \end{spacing}}
-
-% fim epigrafe
-
-
-
+%----------------------------------------------------------------------------------------
 
 %----------------------------------------------------------------------------------------
 % MAGIC BOX
@@ -702,7 +703,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \deliveconjfalse
 \newif\ifschoolnset
 \schoolnsettrue
-
 
 \newcommand{\@school}[1]{%
 	\schoolnsetfalse
@@ -904,7 +904,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \NewDocumentCommand{\department}{m}{\renewcommand{\deptname}{#1}}
 \NewDocumentCommand{\departmentnumber}{m}{\renewcommand{\deptnumber}{#1}}
 
-
 \newcommand\addcomue{Comue Universite Bretagne Loire}
 \NewDocumentCommand{\addresses}{m}{\renewcommand{\addcomue}{#1}}
 
@@ -954,8 +953,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 }%
 %\makeatother%
 
-
-%TODO BUG on cover with draftmode
+%TODO: BUG on cover with draftmode
 %----------------------------------------------------------------------------------------
 % PAGES RELATED TO SETUP FOR DRAFT
 %----------------------------------------------------------------------------------------
@@ -984,21 +982,16 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newlength{\lenDif}
 \lenDif=0pt
 \settowidth{\lenMax}{Co-dir.\ de th\`{e}se\,:}
-\newlength{\lenP}
-\settowidth{\lenP}{President~:}
 %----------------------------------------------------------------------------------------
 % president parameters [Mme] {Name} {Surname} {Fonction et établissement d’exercice}
 \newcommand{\president}[4][M]{%
 	\renewcommand{\Mpres}{#1}%
-	\ifthenelse{\equal{#1}{Mme}}{\renewcommand{\TPres}{Pr\'{e}sidente}\settowidth{\lenP}{Presidente~:}}{}% fix length president -> presidente
+	\ifthenelse{\equal{#1}{Mme}}{\renewcommand{\TPres}{Pr\'{e}sidente}}{}% fix length president -> presidente
 	\renewcommand{\PRESp}{#2}%
 	\renewcommand{\PRESn}{#3}%
 	\renewcommand{\PRESq}{#4}%
 }
-\newlength{\lenPF}
-\lenPF=0pt
-\advance\lenPF by \lenMax
-\advance\lenPF by -\lenP 
+
 %----------------------------------------------------------------------------------------
 \newcounter{III}
 %----------------------------------------------------------------------------------------
@@ -1035,8 +1028,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\fi
 	\ifnum\theIII>1	
 	\hspace{\lenMax}\dbox{\parbox[t]{13.9cm}{{\csname EXAp#1\endcsname} \textsc{\csname EXAn#1\endcsname}~---~{\small\csname EXAq#1\endcsname}}}% {\small\csname EXAt#1\endcsname}
-	\fi
-	
+	\fi	
 }
 %----------------------------------------------------------------------------------------
 % Advisors
@@ -1067,7 +1059,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\lenDif=0pt
 	\advance\lenDif by 	\lenMax
 	\advance\lenDif by 	-\lenAct
-	Dir.\ de th\`{e}se~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{{\csname ADVp#1\endcsname} \textsc{\csname ADVn#1\endcsname}~--~{\small\csname ADVq#1\endcsname}}}%{\small\csname ADVt#1\endcsname}
+	Dir.\ de th\`{e}se~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{{\csname ADVp#1\endcsname} \textsc{\csname ADVn#1\endcsname}~---~{\small\csname ADVq#1\endcsname}}}%{\small\csname ADVt#1\endcsname}
 	\fi
 	\ifnum\theIII=2	
 	\settowidth{\lenAct}{Co-dir.\ de th\`{e}se\,:}
@@ -1164,7 +1156,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 {\bfseries{Rapporteurs avant soutenance~:\\}}%
 	\setcounter{III}{0}%
 	{\small%
-		\whiledo{{\value{III}<\value{nrap}}}{\stepcounter{III}\Lrap{\roman{III}}}%
+		\whiledo{{\value{III}<\value{nrap}}}{\stepcounter{III}\Lrap{\roman{III}}\\}%
 	}%
 	\vspace{0.25cm}%
 	{\bfseries~\\Composition du jury~:\\}%
@@ -1172,9 +1164,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 		\textcolor{mathSTIC-Color}{\textit{Attention, en cas d'absence d’un des membres du Jury le jour de la soutenance,  la composition ne comprend que les membres pr\'{e}sents}}}\\%
 	{\setlength{\baselineskip}{0.5\baselineskip} %
 		{\small%
-			\TPres{}~:\hspace{\lenPF}\dbox{\parbox[t]{13.9cm}{\PRESp~\textsc{\PRESn{}}~---~\PRESq}}\\%
+            \settowidth{\lenAct}{\TPres~:}
+	        \lenDif=0pt
+	        \advance\lenDif by 	\lenMax
+	        \advance\lenDif by 	-\lenAct
+			\TPres{}~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{\PRESp~\textsc{\PRESn{}}~---~\PRESq}}\\%
 			\setcounter{III}{0}%
-			\whiledo{{\value{III}<\value{nexa}}}{\stepcounter{III}\Lexa{\roman{III}}}%
+			\whiledo{{\value{III}<\value{nexa}}}{\stepcounter{III}\Lexa{\roman{III}}\\}%
 			\setcounter{III}{0}%
 			\vspace{0.15cm}%
 			\whiledo{{\value{III}<\value{nadv}}}{\stepcounter{III}\Ladv{\roman{III}}\\}%
@@ -1190,7 +1186,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	}%	
 }%
 
-
 %----------------------------------------------------------------------------------------
 %	COVER PAGE DESIGN
 %----------------------------------------------------------------------------------------
@@ -1200,7 +1195,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \def\@coverext{eps}
 \newcommand*{\coverbackground}[1]{\gdef\@coverbackground{#1}}%
 \coverbackground{./cover/cover\covertypen.\@coverext}
-%\makeatletter%
 \def\maketitle{%
 	\newgeometry{margin=0.5in}%
 	\newcounter{totalJury}
@@ -1298,7 +1292,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			% TITLE / SUBTITLE
 			\node[st, align=center, below = 0.2cm of H4] (H5){%
 				{\centering \scshape{\Large\bfseries\fontfamily{phv}\selectfont\@title} \\%
-					\iftsubt{\large\@subtitle}\fi%
+                    \iftsubt{\large\@subtitle}\else{\large\phantom{X}}\fi%
 				}%
 			};
 			% Bloc 6
@@ -1319,13 +1313,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\cleardoublepage%
 	\pagestyle{plain}
 }%
-%\makeatother% 
-
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE DESIGN
 %----------------------------------------------------------------------------------------
-%\makeatletter%
 \newcommand*{\abstractbackground}[1]{\gdef\@abstractbackground{#1}}
 \abstractbackground{./cover/back_resume.\@coverext}
 %
@@ -1414,7 +1405,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\end{spacing}
 %	\cleardoublepage
 }%
-%\makeatother%
+
 %----------------------------------------------------------------------------------------
 %	COVER BACK PAGE
 %----------------------------------------------------------------------------------------
@@ -1481,13 +1472,12 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 
 
 %----------------------------------------------------------------------------------------
-%	ABBREVIATIONS PAGE DESIGN
+%	ABBREVIATIONS PAGE DESIGN / USED WHEN ACRO PACKAGE IN NOT LOADED
 %----------------------------------------------------------------------------------------
-
 \newcommand{\abbrevname}{List of Abbreviations}
 \providecaptionname{english,british,american}{\abbrevname}{List of Abbreviations}
 \providecaptionname{french}{\abbrevname}{Liste des sigles}
-\NewDocumentEnvironment{abbreviations}{ m }{%
+\NewDocumentEnvironment{abbreviations}{m}{%
 	\ifbool{nolistspace}{\begingroup\singlespacing}{}
 	\ifbool{listtoc}{\addchap{\abbrevname}}{\addchap*{\abbrevname}}
 	\setlength\LTleft{0pt}
@@ -1503,12 +1493,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 %----------------------------------------------------------------------------------------
 %	PHYSICAL CONSTANTS PAGE DESIGN
 %----------------------------------------------------------------------------------------
-
 \newcommand{\constantsname}{Physical Constants}
 \providecaptionname{english,british,american}{\constantsname}{Physical Constants}
 \providecaptionname{french}{\constantsname}{Constantes}
-
-\NewDocumentEnvironment{constants}{ m }{%
+\NewDocumentEnvironment{constants}{m}{%
 	\ifbool{nolistspace}{\begingroup\singlespacing}{}
 	\ifbool{listtoc}{\addchap{\constantsname}}{\addchap*{\constantsname}}
 	\begin{longtable}{@{\extracolsep{\fill}}#1@{}}
@@ -1521,13 +1509,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 %----------------------------------------------------------------------------------------
 %	SYMBOLS PAGE DESIGN
 %----------------------------------------------------------------------------------------
-
 \newcommand{\symbolsname}{List of Symbols}
 \providecaptionname{english,british,american}{\symbolsname}{List of Symbols}
 \providecaptionname{french}{\symbolsname}{Nomenclature}
-
-
-\NewDocumentEnvironment{symbols}{ m }{%
+\NewDocumentEnvironment{symbols}{m}{%
 	\ifbool{nolistspace}{\begingroup\singlespacing}{}
 	\ifbool{listtoc}{\addchap{\symbolsname}}{\addchap*{\symbolsname}}
 	\begin{longtable}{@{\extracolsep{\fill}}#1@{}}
@@ -1537,12 +1522,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\ifbool{nolistspace}{\endgroup}{}
 }
 
-
-
-%\newcommand{\url}[1]{%
-%\expandafter\string\csname #1\endcsname}
-
-% FIX PDF
+% Compiler dependet fix.
 \ifx\pdfoutput\undefined
     % not running pdfTeX
 \else
@@ -1553,6 +1533,18 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
         \ifnum\pdfoutput>0
             \pdfminorversion=7
             \pdfobjcompresslevel=2
+             \AtBeginDocument{%
+                \ifbool{hyperrefsupport}{%
+                    \hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
+                    \hypersetup{pdfauthor=\@author} % Set the PDF's author to your name
+                    \hypersetup{pdfsubject=\abstractT} % Set the PDF's subject to your subject
+                    \hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
+                    \if@twoside 
+                        \hypersetup{pdfduplex=DuplexFlipLongEdge} % Set the PDF's to duplex mode
+                    \fi
+                }{}
+             }
+	     \pdfsuppresswarningpagegroup=1
             % If there is an explicit linebreak in a section heading (or anything printed to the pdf- bookmarks), it is replaced by a space
             %\pdfstringdefDisableCommands{\let\\\space}
         \else
@@ -1561,22 +1553,27 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
     \fi
 \fi
 
+%----------------------------------------------------------------------------------------
+%	BASED ON THE CURRENT BASE LANGUAGE, SET THE COVER TITLE
+%----------------------------------------------------------------------------------------
 \AtBeginDocument{%
-	\ifcurrentbaselanguage{French}{
+	\ifcurrentbaselanguage{French}{%
 	\renewcommand{\@title}{\@titleF}
 	\renewcommand{\@subtitle}{\@subtitleF}
-	\message{FRENCH}
-	}{\message{NOT FRENCH}}
+	}{}
 }
 
 
+%----------------------------------------------------------------------------------------
+%	PUT THE BACKCOVER THERE
+%----------------------------------------------------------------------------------------
 \AtEndDocument{%
 \makebackcover
 }
 
 % disable page counter reseting.
-\renewcommand\mainmatter{
+\renewcommand\mainmatter{%
 	\@mainmattertrue\cleardoublepage\renewcommand\thepage{\arabic{page}}}
 
-
 \endinput
+
