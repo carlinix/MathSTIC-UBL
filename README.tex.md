@@ -37,11 +37,11 @@ To fill the front and back cover is really easy. Considering the as base the fil
 
   -`\tnumber{number}`: The thesis number
   
-  -`\abstract{}`: The abstract of your thesis in English (max 1700 words).
+  -`\abstract{}`: The abstract of your thesis in English (max 1700 characters).
   
   -`\keywords{}`: from 3 to 6 keywords in English.
   
-  -`\resume{}`: The abstract of your thesis in French (max 1700 words).
+  -`\resume{}`: The abstract of your thesis in French (max 1700 characters).
   
   -`\motscles{}`: From 3 to 6 keywords in French.
 
