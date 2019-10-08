@@ -94,25 +94,27 @@ To fill the front and back cover is really easy. Considering the as base the fil
   - Function --- establishment:
     
   # Extra commands:
-   -`\makequotation{Phrase}{Author}{Where}`
+   -`\summary` : Make the summary (one level TOC, used at the beginning of the document).
   
-   -`\dedicatory{To someone} 
+   -`\makequotation{Phrase}{Author}{Where}`: The quotation at the beginning of the document.
+  
+   -`\dedicatory{To someone}`: The dedicatory at the beginning of the document. 
    
-   -`\addpart{Title}`
+   -`\addpart{Title}`: To add an unnumbered part to the TOC.
    
-   -`\addchap{Title}`
+   -`\addchap{Title}`: To add an unnumbered chaper to the TOC.
    
-   -`\addsec{Title}`
+   -`\addsec{Title}`: To add an unnumbered section to the TOC.
    
-   -`\addsubsec{Title}`
+   -`\addsubsec{Title}`: To add an unnumbered subsection to the TOC.
    
-   -`\addsubsubsec{Title}`
+   -`\addsubsubsec{Title}`: To add an unnumbered subsubsection to the TOC.
    
-   -`\epigraph{Quote}{Author}`
+   -`\epigraph{Quote}{Author}`: To make an epigraph, good at the begining of chapters
 
-   -`\magicbox{Title of my box}{content}`
+   -`\magicbox{Title of my box}{content}`: Create a box with title
    
-   -`\simplebox{Title of my box}{content}`
+   -`\simplebox{Title of my box}{content}`: Create a box without title
    
    -`\ublmstic`: writes $\mathrm{MathSTIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}$
    
