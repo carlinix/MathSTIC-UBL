@@ -71,25 +71,25 @@
 \RequirePackage{translations} 
 % ---
 % Table related packages
-\RequirePackage{longtable} % Required for tables that span multiple pages (used in the
-                           % symbols, abbreviations and physical constants pages)
-\RequirePackage{booktabs}  % Required for better table rules
-\RequirePackage{multirow}  % flexibility, including an option for specifying an entry at the “natural” width of its text.
+\RequirePackage{longtable}	% Required for tables that span multiple pages (used in the
+							% symbols, abbreviations and physical constants pages)
+\RequirePackage{booktabs}	% Required for better table rules
+\RequirePackage{multirow}	% flexibility, including an option for specifying an entry at the “natural” width of its text.
 % ---
 % Layout related packages
 \RequirePackage{geometry}
 \RequirePackage{setspace} 
-\RequirePackage{caption3} 		   % load caption package kernel first
-\DeclareCaptionOption{parskip}[]{} % disable "parskip" caption option
-\RequirePackage{caption} 		   % Required for customising the captions
+\RequirePackage{caption3} 			% load caption package kernel first
+\DeclareCaptionOption{parskip}[]{}	% disable "parskip" caption option
+\RequirePackage{caption} 			% Required for customising the captions
 \RequirePackage[markcase=used]{scrlayer-scrpage} % controlling page headers and footers.
-\RequirePackage{multicol}			 % Required for abstract page
+\RequirePackage{multicol}			% Required for abstract page
 \RequirePackage[table,xcdraw]{xcolor} % used to color fonts and tables.
-\RequirePackage[bottom]{footmisc}   % force footnote to the page's botton
- %
- % This is really ugly, but this patch needs to be applied before minitoc and shorttoc.
- % Fix the absence of gap between chapters in the LOA. Now LOA, LOT, and LAF have the same aspect.
- \patchcmd{\@chapter}% <cmd>
+\RequirePackage[bottom]{footmisc}	% force footnote to the page's botton
+%
+% This is really ugly, but this patch needs to be applied before minitoc and shorttoc.
+% Fix the absence of gap between chapters in the LOA. Now LOA, LOT, and LAF have the same aspect.
+\patchcmd{\@chapter}% <cmd>
    {\chaptermark{#1}}% <search>
    {\chaptermark{#1}%
     \addtocontents{loa}{\protect\addvspace{10\p@}}}% replace
@@ -99,24 +99,23 @@
 \RequirePackage{minitoc}		% table of contents per chapter
 \RequirePackage{epigraph}		% for epigraph
 \RequirePackage{varwidth}		% for epigraph
-\RequirePackage{titletoc}     		% Customize TOC, LO?
-
+\RequirePackage{titletoc}		% Customize TOC, LO?
 % ---
 % image / Lists / float related packages
-\RequirePackage{graphicx} 	% Required to include images
-\graphicspath{{Figures/}{./}}   % Specifies where to look for included images
-\RequirePackage{tikz} 		% Required for cover page, abtract page, etc.
+\RequirePackage{graphicx}		% Required to include images
+\graphicspath{{Figures/}{./}}	% Specifies where to look for included images
+\RequirePackage{tikz}			% Required for cover page, abtract page, etc.
 \usetikzlibrary{positioning,calc}
-\RequirePackage{framed}         	% Magic and simple boxes
+\RequirePackage{framed}			% Magic and simple boxes
 \RequirePackage{ntheorem}		% support for making a list of theorems, analagous to \listoffigures.
-\RequirePackage[inline]{enumitem}       % User control over the layout of the enumerate, itemize and description
+\RequirePackage[inline]{enumitem}	% User control over the layout of the enumerate, itemize and description
 \RequirePackage[chapter]{algorithm}	% Provides the algorithm environment
 % ---
 % Fonts
-\RequirePackage{calligra}       % Required for dedicace page
-\RequirePackage{amssymb}	% Math symbols
-\RequirePackage{amsmath}        % The principal package in the AMS-LATEX
-\RequirePackage{textcomp}       % he package supports the Text Companion fonts, which provide many text symbols 
+\RequirePackage{calligra}		% Required for dedicace page
+\RequirePackage{amssymb}		% Math symbols
+\RequirePackage{amsmath}		% The principal package in the AMS-LATEX
+\RequirePackage{textcomp}		% he package supports the Text Companion fonts, which provide many text symbols 
 
 %----------------------------------------------------------------------------------------
 % THOSE PACKAGES MUST BE LOAD AT THE END
@@ -138,8 +137,7 @@
             pdfborder={0 0 0}, %%%%%
             breaklinks=true,
      	}
- 		
-    }{% NO hyperref    	
+    }{% NO hyperref
     }
     \ifbool{cleverefsupport}{% If the noclevref class option has not been specified
         \RequirePackage{cleveref}
@@ -168,24 +166,20 @@
 		\input{./acro-def.tex}
  	}{}
  	%	\RequirePackage[babel,kerning]{microtype}
- 
- 
-
- 
 	%----------------------------------------------------------------------------------------
 	% Fix polyglossie captions 
 	%----------------------------------------------------------------------------------------
 	% Table
-	\renewcaptionname{french}{\tablename}{Tableau}                %Table
-	
+	\renewcaptionname{french}{\tablename}{Tableau}
+
 	% algorithm
-	\newcaptionname{french}{\ALG@name}{Algorithme}                
+	\newcaptionname{french}{\ALG@name}{Algorithme}
 	\newcaptionname{french}{\listalgorithmname}{Liste des algorithmes}
-	
+
 	% Summary
 	\newcaptionname{french}{\Sum@name}{Sommaire}
 	\newcaptionname{english}{\Sum@name}{Summary}
-	
+
 	\newcaptionname{french}{\algorithmicprocedure}{\textbf{procédure}}
 	\newcaptionname{french}{\Not}{\textbf{non}\ }
 	\newcaptionname{french}{\And}{\textbf{et}\ }
@@ -206,7 +200,6 @@
 	\newcaptionname{french}{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
 
 	\RequirePackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-
 }
 %----------------------------------------------------------------------------------------
 \newcounter{socdepth}
@@ -294,7 +287,7 @@
 	head=20.00409pt,    % fix
 	includehead,
 	includefoot,
-	%paper=a4paper,      % Change to letterpaper for US letter
+	%paper=a4paper,     % Change to letterpaper for US letter
 	inner=2.5cm,        % Inner margin
 	outer=2.5cm,        % Outer margin
 	bindingoffset=.5cm, % Binding offset
@@ -326,8 +319,6 @@
 \setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt} % Fix float distance
 \setlength{\parindent}{1.5em} % Paragraph indent lenght
 
-
-
 %----------------------------------------------------------------------------------------
 %	PENALTIES
 %----------------------------------------------------------------------------------------
@@ -336,7 +327,6 @@
 \widowpenalty=9999 % Almost no widows at bottom of page
 \clubpenalty=9999 % Almost no orphans at top of page
 \interfootnotelinepenalty=9999 % Almost never break footnotes
-
 
 %----------------------------------------------------------------------------------------
 %  Simple interface for the user  to customize the chapter titles 
@@ -381,8 +371,6 @@
 	\thispagestyle{\chapter@p@gestyle}
 }
 
-
-
 \ifbool{listtoc}{% If the liststotoc option has been passed to the class, add the lists to the table of contents
 	\patchcmd{\listoftables}{\@starttoc{lot}}{%
 		\addchaptertocentry{\listtablename}\@starttoc{lot}%
@@ -394,7 +382,6 @@
 	\addchaptertocentry{\listofalgorithms}\@starttoc{loa}%
 }{}{}%
 }
-
 
 \ifbool{toctoc}{% If the toctotoc options has been passed to the class, add the table of contents to the table of contents
 	\patchcmd{\tableofcontents}{\@starttoc{toc}%
@@ -447,7 +434,6 @@
 	\shorttoc{\Sum@name}{\value{socdepth}}
 }
 
-
 \newcommand{\checktoopen}{% New command to move content to the next page which prints to the next odd page if twosided mode is active  
 	\if@openright\cleardoublepage\else\clearpage\fi
 	\ifdef{\phantomsection}{\phantomsection}{}% The \phantomsection command is necessary for hyperref to jump to the correct page
@@ -460,7 +446,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 % make \footnote and \url robust commands, needs package `etoolbox':
 \robustify\footnote
 %\robustify\url
-
 
 %----------------------------------------------------------------------------------------
 % EPIGRAPH
@@ -526,7 +511,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \NewDocumentCommand{\simplebox}{+m}{%
     \begin{center}\begin{minipage}{0.57\paperwidth}\begin{shaded}#1\end{shaded}\end{minipage}\end{center}}
 
-%
 \NewDocumentCommand{\tttypeout}{m}{\bhrule\typeout{\space\#1}\bhrule}
 \NewDocumentCommand{\bhrule}{}{\typeout{--------------------}}
 \newcommand{\decoRule}{\rule{.8\textwidth}{.4pt}} % New command for a rule to be used under figures
@@ -620,7 +604,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\addcontentsline{toc}{chapter}{#1}%
 }
 
-
 \titlecontents{figure}[2.0em]{}{\contentslabel{2.3em}}{}{\titlerule*[0.25pc]{.}\contentspage}{}
 \titlecontents{table}[2.0em]{}{\contentslabel{2.3em}}{}{\titlerule*[0.25pc]{.}\contentspage}{}
 \contentsuse{algorithm}{loa}
@@ -632,8 +615,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
 \patchcmd{\listofalgorithms}{\listtablename}{\listalgorithmname}{}{}
 \patchcmd{\listofalgorithms}{lot}{loa}{}{}
-
-
 
 %----------------------------------------------------------------------------------------
 %	COLOURS
@@ -1022,8 +1003,8 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\ifnum\theIII=1
 	\settowidth{\lenAct}{\TExam~:}
 	\lenDif=0pt
-	\advance\lenDif by 	\lenMax
-	\advance\lenDif by 	-\lenAct
+	\advance\lenDif by \lenMax
+	\advance\lenDif by -\lenAct
 	\TExam~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{{\csname EXAp#1\endcsname} \textsc{\csname EXAn#1\endcsname}~---~{\small\csname EXAq#1\endcsname}}}%{\small\csname EXAt#1\endcsname}
 	\fi
 	\ifnum\theIII>1	
@@ -1148,26 +1129,25 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand{\pnqADV}[1]{%
 	\csname ADVp#1\endcsname\ \csname ADVn#1\endcsname, \csname ADVq#1\endcsname}
 
-
 %----------------------------------------------------------------------------------------
 % Create the jury box
 %----------------------------------------------------------------------------------------
 \newcommand{\JURYX}{%	
-{\bfseries{Rapporteurs avant soutenance~:\\}}%
+{\fontfamily{phv}\selectfont\bfseries{Rapporteurs avant soutenance~:\\}}%
 	\setcounter{III}{0}%
-	{\small%
+	{\fontfamily{phv}\selectfont\small%
 		\whiledo{{\value{III}<\value{nrap}}}{\stepcounter{III}\Lrap{\roman{III}}\\}%
 	}%
 	\vspace{0.25cm}%
-	{\bfseries~\\Composition du jury~:\\}%
-	{\footnotesize%
+	{\fontfamily{phv}\selectfont\bfseries~\\Composition du jury~:\\}%
+	{\fontfamily{phv}\selectfont\footnotesize%
 		\textcolor{mathSTIC-Color}{\textit{Attention, en cas d'absence d’un des membres du Jury le jour de la soutenance,  la composition ne comprend que les membres pr\'{e}sents}}}\\%
 	{\setlength{\baselineskip}{0.5\baselineskip} %
-		{\small%
+		{\fontfamily{phv}\selectfont\small%
             \settowidth{\lenAct}{\TPres~:}
 	        \lenDif=0pt
-	        \advance\lenDif by 	\lenMax
-	        \advance\lenDif by 	-\lenAct
+	        \advance\lenDif by \lenMax
+	        \advance\lenDif by -\lenAct
 			\TPres{}~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{\PRESp~\textsc{\PRESn{}}~---~\PRESq}}\\%
 			\setcounter{III}{0}%
 			\whiledo{{\value{III}<\value{nexa}}}{\stepcounter{III}\Lexa{\roman{III}}\\}%
@@ -1196,7 +1176,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand*{\coverbackground}[1]{\gdef\@coverbackground{#1}}%
 \coverbackground{./cover/cover\covertypen.\@coverext}
 \def\maketitle{%
-	\newgeometry{margin=0.5in}%
+	\newgeometry{margin=1.1cm}%
 	\newcounter{totalJury}
 	\setcounter{totalJury}{0}
 	\addtocounter{totalJury}{\value{nexa}}
@@ -1225,18 +1205,18 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			% BACKGROUND
 			\node[anchor=center] at (current page.center){\includegraphics[height=\paperheight,width=\paperwidth]{\@coverbackground}};%
 			%
-			\node[,anchor=north west] (FL) at (page cs:-0.869,0.91) {%
+			\node[,anchor=north west] (FL) at (page cs:-0.869,0.925) {%
 				\includegraphics[height=23.5mm,keepaspectratio]{./cover/logos/logo-mathSTIC.\@coverext}%
 			};%	
 			\ifcotutele% 
 			% LOGO COTUTELE
-			\node[anchor= east] (FC) at (page cs:0.869,0.8251) {%
+			\node[anchor= east] (FC) at (page cs:0.869,0.840) {%
 				\includegraphics[width=2.33cm,keepaspectratio]{\cotutelelogopath}%
 			};%
 			% CONJOINT and COTUTELE
 			\ifdeliveconj%
 			\node[left = 0.3cm of FC.west] (FUR1) {%
-				\includegraphics[width=4.99cm,keepaspectratio]{./cover/logos/logo-UR1.\@coverext}%
+				\includegraphics[width=5.08cm,keepaspectratio]{./cover/logos/logo-UR1.\@coverext}%
 			};%
 			\node[left = 0.3cm of FUR1.west] (FR) {%
 				\includegraphics[height=\logoH,width=\logoW]{./cover/logos/logo-\logoUNIV.\@coverext}%
@@ -1256,7 +1236,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			\node[left = 0.3cm of FUR1.west] (FR) {%
 				\includegraphics[height=\logoH,width=\logoW]{./cover/logos/logo-\logoUNIV.\@coverext}%
 			};%
-			\else		    
+			\else
 			% ONLY ONE LOGO
 			\node[anchor= east] (FR) at (page cs:0.869,0.825) {%
 				\includegraphics[height=\logoH,width=\logoW]{./cover/logos/logo-\logoUNIV.\@coverext}%
@@ -1265,45 +1245,45 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			\fi%	
 			% TEXT TITLE LINE 1
 			\node[st] (H1) at (page cs:-0.85,0.65) {%
-				{\Huge\fontfamily{phv}\selectfont\scshape Th\`{e}se de Doctorat de}%
+				{\fontfamily{phv}\selectfont\scshape\Huge Th\`{e}se de Doctorat de}%
 			};%
 			% Bloc 2
-			\node[st,below = 2cm of H1] (H2) {%
-				{\fontfamily{phv}\selectfont \scshape  {\Large \univname}\\%
+			\node[st,below = 2.7cm of H1] (H2) {%
+				{\fontfamily{phv}\selectfont\scshape{\Large \univname}\\%
 					\ifdeliveconj%
-					Deliver\'{e}e Conjointement avec\\l’Universit\'{e} de Rennes 1\\%
+                    {Deliver\'{e}e Conjointement avec\\l’Universit\'{e} de Rennes 1}\\%
 					\fi%
 					\ifcotutele%
-					\cotutelename\\%
+                    {\cotutelename}\\%
 					\fi% 
 					\addcomue}%
 			};%
 			% Bloc 3
-			\node[st,below = 1cm of H2] (H3)  {%				
-				{\fontfamily{phv}\selectfont \scshape \'{E}col\'{e} Doctorale N\footnotesize{\textsuperscript{\underline{o}}} \deptnumber}\\%
+			\node[st,below = 0.9cm of H2] (H3)  {%				
+				{\fontfamily{phv}\selectfont\scshape \'{E}col\'{e} Doctorale N{\footnotesize\textsuperscript{\underline{o}}} \deptnumber}\\%
 				{\itshape \fontfamily{phv}\selectfont \deptname}\\%
 				{\fontfamily{phv}\selectfont Sp\'{e}cialit\'{e} : \subjectname} \\[0.25cm]%
-				\hspace*{0.5cm}Par%				
 			};%
 			% AUTHOR NAME
-			\node[st,below = 0.2cm of H3] (H4) {%
+			\node[st,below = 1.0cm of H3] (H4) {%
+                {\fontfamily{phv}\selectfont{}Par\\}
 				{\LARGE\bfseries\fontfamily{phv}\selectfont\hspace*{0.5cm}\@author}%
 			};%
 			% TITLE / SUBTITLE
-			\node[st, align=center, below = 0.2cm of H4] (H5){%
-				{\centering \scshape{\Large\bfseries\fontfamily{phv}\selectfont\@title} \\%
-                    \iftsubt{\large\@subtitle}\else{\large\phantom{X}}\fi%
+			\node[st, align=center, below = 0.5cm of H4] (H5){%
+				{\centering\scshape{\Large\bfseries\fontfamily{phv}\selectfont\@title} \\%
+                    \iftsubt{\large\@subtitle}\else{\large\phantom{XXXXXX}}\fi%
 				}%
 			};
 			% Bloc 6
-			\node[st, below = of H5] (H6) {%
+			\node[st, below = 1.0cm of H5] (H6) {%
 				{\fontfamily{phv}\selectfont\bfseries Th\`{e}se pr\'{e}sent\'{e}e et soutenue \`{a} \cityname{} le \@date \\%
 					Unit\'{e} de recherche : \labname\\% 
-					Th\`{e}se N\footnotesize{\textsuperscript{\underline{o}}} : \theseorder% 
+					Th\`{e}se N{\footnotesize\textsuperscript{\underline{o}}} : \theseorder% 
 				}%
 			};%
 			% Bloc 7 (REPORTER AND JURY)
-			\node[st, below = of H6] (H7) {%
+			\node[st, below = 1.1cm of H6] (H7) {%
 				\JURYX%
 			};%
 			\end{tikzpicture}%
@@ -1470,7 +1450,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	}
 }
 
-
 %----------------------------------------------------------------------------------------
 %	ABBREVIATIONS PAGE DESIGN / USED WHEN ACRO PACKAGE IN NOT LOADED
 %----------------------------------------------------------------------------------------
@@ -1488,7 +1467,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\addtocounter{table}{-1}% Don't count this table as one of the document tables
 	\ifbool{nolistspace}{\endgroup}{}
 }
-
 
 %----------------------------------------------------------------------------------------
 %	PHYSICAL CONSTANTS PAGE DESIGN
@@ -1563,7 +1541,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	}{}
 }
 
-
 %----------------------------------------------------------------------------------------
 %	PUT THE BACKCOVER THERE
 %----------------------------------------------------------------------------------------
@@ -1576,4 +1553,3 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\@mainmattertrue\cleardoublepage\renewcommand\thepage{\arabic{page}}}
 
 \endinput
-
