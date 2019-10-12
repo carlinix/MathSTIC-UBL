@@ -1,6 +1,7 @@
 # MathSTIC-UBL LaTeX Class
 $\LaTeX$  PhD thesis template for the _Université Bretagne Loire_ (UBL) MathSTIC Doctoral School.
 
+Last version: 1.0.1
 [Link dowload release 1.0.1](https://drive.google.com/drive/folders/1JJLK4g8ZMs1k6xDMJImjpZC9Sg0LLbO5?usp=sharing)
 
 -----
