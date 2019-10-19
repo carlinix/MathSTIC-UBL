@@ -121,6 +121,8 @@ To fill the front and back cover is really easy. Considering the as base the fil
 
    -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
    
+   -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
+   
 ## Class options:
 To change the document layout, remember. By defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats), the options a4paper, 12pt, onehalfspacing, indentfirst and parkskip are mandatory.
 
