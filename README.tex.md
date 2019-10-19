@@ -1,8 +1,8 @@
 # MathSTIC-UBL LaTeX Class
 $\LaTeX$  PhD thesis template for the _Université Bretagne Loire_ (UBL) MathSTIC Doctoral School.
 
-Last version: 1.0.1
-[Link dowload release 1.0.1](https://drive.google.com/drive/folders/1JJLK4g8ZMs1k6xDMJImjpZC9Sg0LLbO5?usp=sharing)
+Last version: 2.0.0
+[Link dowload release 2.0.0](https://drive.google.com/drive/folders/1JJLK4g8ZMs1k6xDMJImjpZC9Sg0LLbO5?usp=sharing)
 
 -----
 *English explanations*
@@ -118,6 +118,8 @@ To fill the front and back cover is really easy. Considering the as base the fil
    -`\simplebox{Title of my box}{content}`: Create a box without title
    
    -`\ublmstic`: writes $\mathrm{MathSTIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}$
+   
+   -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
    
 ## Class options:
 To change the document layout, remember. By defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats), the options a4paper, 12pt, onehalfspacing, indentfirst and parkskip are mandatory.
