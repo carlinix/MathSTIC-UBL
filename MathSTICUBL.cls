@@ -165,7 +165,8 @@
 		}
 		\input{./acro-def.tex}
  	}{}
- 	%	\RequirePackage[babel,kerning]{microtype}
+ 	%	\RequirePackage[babel,kerning]{microtype} %fix clevref and french but create problems with spaces
+ 	%
 	%----------------------------------------------------------------------------------------
 	% Fix polyglossie captions 
 	%----------------------------------------------------------------------------------------
@@ -244,15 +245,14 @@
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
-% I don't know why this need to be after the ProcessOptions command.
+% TODO: I don't know why this need to be after the ProcessOptions command.
 %\RequirePackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 \ifbool{hyperrefsupport}{%
 	\RequirePackage[style=verbose-trad1,hyperref,backend=biber,natbib=true]{biblatex}
 }{%
 	\RequirePackage[style=verbose-trad1,backend=biber,natbib=true]{biblatex}
 }
-\newcommand{\bibheadingnameP}{Primary Sources}
-\newcommand{\bibheadingnameS}{Secundary Sources}
+
 \providecaptionname{english,british,american}{\bibheadingnameP}{Primary Sources}
 \providecaptionname{french}{\bibheadingnameP}{Sources primaires}
 \providecaptionname{english,british,american}{\bibheadingnameS}{Secondary Sources}
@@ -266,14 +266,42 @@
 \DefineBibliographyStrings{english}{%
 	in = {\emph{in}}%
 }
-%----------------------------------------------------------------------------------------
 
+%----------------------------------------------------------------------------------------
+% APUD
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+\NewBibliographyString{apud}
+\DefineBibliographyStrings{english}{apud=apud}
+\DefineBibliographyStrings{french}{apud=apud}
+
+\NewDocumentCommand{\apud}{o o m o o m}{%
+	\citeauthor{#3}
+	\mkbibparens{%
+		\IfNoValueTF{#2}
+		{%
+			\IfNoValueTF{#1}
+			{\citeyear{#3}}
+			{\citeyear[#1]{#3}}%
+		}
+		{%
+			\citeyear[#1][#2]{#3}%
+		}   
+		\IfNoValueTF{#5}
+		{%
+			\IfNoValueTF{#4}
+			{\cite[\blx@imc@bibxstring{apud}][]{#6}}
+			{\cite[\blx@imc@bibxstring{apud}][#4]{#6}}%
+		}
+		{%
+			\cite[\blx@imc@bibxstring{apud} #4][#5]{#6}%
+		}%   
+}}
+%----------------------------------------------------------------------------------------
 
 %----------------------------------------------------------------------------------------
 %	CLASS OPTIONS
 %----------------------------------------------------------------------------------------
-
-%---
 % CONDITIONAL PACKAGE LOADING
 \ifbool{parskip}{\RequirePackage{parskip}} % If the parskip option is passed to the class, require the parskip package 
 
@@ -914,7 +942,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 % |                        |
 % |(-1,-1)   (0,-1)  (1,-1)|
 % --------------------------
-%\makeatletter%
 \def\parsecomma#1,#2\endparsecomma{\def\page@x{#1}\def\page@y{#2}}%
 \tikzdeclarecoordinatesystem{page}{%
 	\parsecomma#1\endparsecomma%
@@ -932,7 +959,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\pgfmathparse{(\pgf@yc-\pgf@yb)/2.*\page@y+(\pgf@yc+\pgf@yb)/2.}%
 	\expandafter\pgf@y\expandafter=\pgfmathresult pt%
 }%
-%\makeatother%
 
 %TODO: BUG on cover with draftmode
 %----------------------------------------------------------------------------------------
@@ -956,13 +982,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand{\PRESq}{} % Fonction et établissement d’exercice 
 \newcommand{\Mpres}{} % M or Mme 
 \newcommand{\TPres}{Pr\'{e}sident}
-
-% define hspace in function of the longest phrase
-\newlength{\lenMax}
-\newlength{\lenAct}
-\newlength{\lenDif}
-\lenDif=0pt
-\settowidth{\lenMax}{Co-dir.\ de th\`{e}se\,:}
 %----------------------------------------------------------------------------------------
 % president parameters [Mme] {Name} {Surname} {Fonction et établissement d’exercice}
 \newcommand{\president}[4][M]{%
@@ -974,7 +993,9 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 }
 
 %----------------------------------------------------------------------------------------
+
 \newcounter{III}
+
 %----------------------------------------------------------------------------------------
 % Examinateur
 %----------------------------------------------------------------------------------------
@@ -984,6 +1005,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand{\EXAti}{}
 \newcounter{nexa}
 \setcounter{nexa}{0}
+\newcounter{nexaM}
+\setcounter{nexaM}{0}
+\newcounter{nexaF}
+\setcounter{nexaF}{0}
 %
 \newcommand{\newExam}[5]{%
 	\expandafter\def\csname EXAp#1\endcsname{#2}%
@@ -995,22 +1020,18 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 % examinateur parameters [Mme] {Name} {Surname} {Fonction et établissement d’exercice}
 \newcommand{\examinateur}[4][M]{%
 	\stepcounter{nexa}%
-	\ifthenelse{\equal{#1}{Mme}}{\newExam{\roman{nexa}}{#2}{#3}{#4}{Examinatrice}}{\newExam{\roman{nexa}}{#2}{#3}{#4}{Examinateur}}%
+	\ifthenelse{\equal{#1}{Mme}}{\newExam{\roman{nexa}}{#2}{#3}{#4}{Examinatrice} \stepcounter{nexaF}}{\newExam{\roman{nexa}}{#2}{#3}{#4}{Examinateur}\stepcounter{nexaM}}%
 }
 %
-\newcommand{\TExam}{Examinateurs}
 \newcommand{\Lexa}[1]{%
-	\ifnum\theIII=1
-	\settowidth{\lenAct}{\TExam~:}
-	\lenDif=0pt
-	\advance\lenDif by \lenMax
-	\advance\lenDif by -\lenAct
-	\TExam~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{{\csname EXAp#1\endcsname} \textsc{\csname EXAn#1\endcsname}~---~{\small\csname EXAq#1\endcsname}}}%{\small\csname EXAt#1\endcsname}
-	\fi
-	\ifnum\theIII>1	
-	\hspace{\lenMax}\dbox{\parbox[t]{13.9cm}{{\csname EXAp#1\endcsname} \textsc{\csname EXAn#1\endcsname}~---~{\small\csname EXAq#1\endcsname}}}% {\small\csname EXAt#1\endcsname}
-	\fi	
+	\ifnum\theIII=1%
+		\newcommand{\TExamI}{\TExam}%
+	\else
+		\newcommand{\TExamI}{}%
+	\fi%
+	\dbox{\TExamI} & \csname EXAp#1\endcsname~\textsc{\csname EXAn#1\endcsname} & & {\small\csname EXAq#1\endcsname}\\
 }
+
 %----------------------------------------------------------------------------------------
 % Advisors
 %----------------------------------------------------------------------------------------
@@ -1034,25 +1055,20 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\ifthenelse{\equal{#1}{Mme}}{\newAdv{\roman{nadv}}{#2}{#3}{#4}{Directrice de th\`{e}se}}{\newAdv{\roman{nadv}}{#2}{#3}{#4}{Directeur de th\`{e}se}}%
 }
 %
+\newcommand{\TAdv}{}
 \newcommand{\Ladv}[1]{%
-	\ifnum\theIII=1
-	\settowidth{\lenAct}{Dir.\ de th\`{e}se~:}
-	\lenDif=0pt
-	\advance\lenDif by 	\lenMax
-	\advance\lenDif by 	-\lenAct
-	Dir.\ de th\`{e}se~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{{\csname ADVp#1\endcsname} \textsc{\csname ADVn#1\endcsname}~---~{\small\csname ADVq#1\endcsname}}}%{\small\csname ADVt#1\endcsname}
-	\fi
-	\ifnum\theIII=2	
-	\settowidth{\lenAct}{Co-dir.\ de th\`{e}se\,:}
-	\lenDif=0pt
-	\advance\lenDif by 	\lenMax
-	\advance\lenDif by 	-\lenAct
-	Co-dir.\ de th\`{e}se\,:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{{\csname ADVp#1\endcsname} \textsc{\csname ADVn#1\endcsname}~---~{\small\csname ADVq#1\endcsname}}}% {\small\sname ADVt#1\endcsname}
-	\fi	
-	\ifnum\theIII>2	
-	\hspace{\lenMax}\dbox{\parbox[t]{13.9cm}{{\csname ADVp#1\endcsname} \textsc{\csname ADVn#1\endcsname}~---~{\small\csname ADVq#1\endcsname}}}% {\small\csname ADVt#1\endcsname}
-	\fi
+	\ifnum\theIII=1%
+		\renewcommand{\TAdv}{Dir.\ de th\`{e}se~:}%
+	\else%
+		\ifnum\theIII=2%
+			\renewcommand{\TAdv}{Co-dir.\ de th\`{e}se\,:}%
+		\else%
+			\renewcommand{\TAdv}{}%
+		\fi%
+	\fi%
+\dbox{\TAdv} & \csname ADVp#1\endcsname~\textsc{\csname ADVn#1\endcsname} & & {\small\csname ADVq#1\endcsname}\\
 }
+
 %----------------------------------------------------------------------------------------
 % Rapporteur
 %----------------------------------------------------------------------------------------
@@ -1062,6 +1078,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand{\RAPti}{}
 \newcounter{nrap}
 \setcounter{nrap}{0}
+\newcounter{nrapM}
+\setcounter{nrapM}{0}
+\newcounter{nrapF}
+\setcounter{nrapF}{0}
 %
 \newcommand{\newRap}[5]{%
 	\expandafter\def\csname RAPp#1\endcsname{#2}%
@@ -1073,20 +1093,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 % rapporter parameters [Mme] {Name} {Surname} {Fonction et établissement d’exercice}
 \newcommand{\rapporteur}[4][M]{%
 	\stepcounter{nrap}%
-	\ifthenelse{\equal{#1}{Mme}}{\newRap{\roman{nrap}}{#2}{#3}{#4}{Rapporteuse}}{\newRap{\roman{nrap}}{#2}{#3}{#4}{Rapporteur}}%
+	\ifthenelse{\equal{#1}{Mme}}{\newRap{\roman{nrap}}{#2}{#3}{#4}{Rapporteuse} \stepcounter{nrapF}}{\newRap{\roman{nrap}}{#2}{#3}{#4}{Rapporteur} \stepcounter{nrapM}}%
 }
 %
 \newcommand{\Lrap}[1]{%
-%	\ifnum\theIII=1	
-	\dbox{\parbox[t]{15cm}{{\csname RAPp#1\endcsname} \textsc{\csname RAPn#1\endcsname}~---~{\small\csname RAPq#1\endcsname}}} %{\small\csname RAPt#1\endcsname}
-%	\fi
-%	\ifnum\theIII=2	
-%	\parbox[t]{15cm}{{\csname RAPp#1\endcsname} \textsc{\csname RAPn#1\endcsname} -- {\small\csname RAPq#1\endcsname}} % {\small\csname RAPt#1\endcsname}
-%	\fi	
-%	\ifnum\theIII>2	
-%	\parbox[t]{15cm}{{\csname RAPp#1\endcsname} \textsc{\csname RAPn#1\endcsname} -- {\small\csname RAPq#1\endcsname}} % {\small\csname RAPt#1\endcsname}
-%	\fi	
+	\csname RAPp#1\endcsname~\textsc{\csname RAPn#1\endcsname}& & {\small\csname RAPq#1\endcsname}\\ %{\small\csname RAPt#1\endcsname}
 }
+
 %----------------------------------------------------------------------------------------
 % Invite
 %----------------------------------------------------------------------------------------
@@ -1096,6 +1109,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand{\GUEti}{}
 \newcounter{ngue}
 \setcounter{ngue}{0}
+\newcounter{ngueM}
+\setcounter{ngueM}{0}
+\newcounter{ngueF}
+\setcounter{ngueF}{0}
 %
 \newcommand{\newGue}[5]{%
 	\expandafter\def\csname GUEp#1\endcsname{#2}%
@@ -1107,19 +1124,11 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 % invite parameters [Mme] {Name} {Surname} {Fonction et établissement d’exercice}
 \newcommand{\invite}[4][M]{%
 	\stepcounter{ngue}%
-	\ifthenelse{\equal{#1}{Mme}}{\newGue{\roman{ngue}}{#2}{#3}{#4}{Inviée}}{\newGue{\roman{ngue}}{#2}{#3}{#4}{Invité}}%
+	\ifthenelse{\equal{#1}{Mme}}{\newGue{\roman{ngue}}{#2}{#3}{#4}{Inviée} \stepcounter{ngueF}}{\newGue{\roman{ngue}}{#2}{#3}{#4}{Invité} \stepcounter{ngueM}}%
 }
 
 \newcommand{\Lgue}[1]{%
-%	\ifnum\theIII=1%
-	\dbox{{\csname GUEp#1\endcsname} \textsc{\csname GUEn#1\endcsname}~---~{\small\csname GUEq#1\endcsname}}\\%
-%	\fi%
-%	\ifnum\theIII=2%	
-%	{\csname GUEp#1\endcsname} \textsc{\csname GUEn#1\endcsname} -- {\small\csname GUEq#1\endcsname}%
-%	\fi%	
-%	\ifnum\theIII>2%	
-%	{\csname GUEp#1\endcsname} \textsc{\csname GUEn#1\endcsname} -- {\small\csname GUEq#1\endcsname}%
-%	\fi%	
+	\csname GUEp#1\endcsname~\textsc{\csname GUEn#1\endcsname}& & {\small\csname GUEq#1\endcsname}\\%
 }
 
 \newcommand{\pnqRAP}[1]{%
@@ -1129,41 +1138,92 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand{\pnqADV}[1]{%
 	\csname ADVp#1\endcsname\ \csname ADVn#1\endcsname, \csname ADVq#1\endcsname}
 
+\newcommand{\TRap}{Rapporteurs}
 %----------------------------------------------------------------------------------------
 % Create the jury box
 %----------------------------------------------------------------------------------------
-\newcommand{\JURYX}{%	
-{\fontfamily{phv}\selectfont\bfseries{Rapporteurs avant soutenance~:\\}}%
+\newcommand{\JURYX}{%
+	\ifnum\thenrapM>1%
+		\renewcommand{\TRap}{Rapporteurs}%
+	\else%
+		\ifnum\thenrapM=1%
+			\ifnum\thenrapF>0 
+				\renewcommand{\TRap}{Rapporteurs}%
+			\else%
+				\renewcommand{\TRap}{Rapporteur}%
+			\fi%
+		\else%
+			\ifnum\thenrapF>1 
+				\renewcommand{\TRap}{Rapporteuses}%
+			\else%
+				\renewcommand{\TRap}{Rapporteuse}%
+			\fi%
+		\fi%
+	\fi%
+	{\fontfamily{phv}\selectfont\bfseries{\TRap{} avant soutenance~:\\}}%
 	\setcounter{III}{0}%
 	{\fontfamily{phv}\selectfont\small%
-		\whiledo{{\value{III}<\value{nrap}}}{\stepcounter{III}\Lrap{\roman{III}}\\}%
+		\begin{tabular}{@{}l@{}lll}
+			\whiledo{{\value{III}<\value{nrap}}}{\stepcounter{III}\Lrap{\roman{III}}}%
+		\end{tabular}
 	}%
 	\vspace{0.25cm}%
 	{\fontfamily{phv}\selectfont\bfseries~\\Composition du jury~:\\}%
 	{\fontfamily{phv}\selectfont\footnotesize%
 		\textcolor{mathSTIC-Color}{\textit{Attention, en cas d'absence d’un des membres du Jury le jour de la soutenance,  la composition ne comprend que les membres pr\'{e}sents}}}\\%
-	{\setlength{\baselineskip}{0.5\baselineskip} %
+	{\setlength{\baselineskip}{0.5\baselineskip}%
 		{\fontfamily{phv}\selectfont\small%
-            \settowidth{\lenAct}{\TPres~:}
-	        \lenDif=0pt
-	        \advance\lenDif by \lenMax
-	        \advance\lenDif by -\lenAct
-			\TPres{}~:\hspace{\lenDif}\dbox{\parbox[t]{13.9cm}{\PRESp~\textsc{\PRESn{}}~---~\PRESq}}\\%
 			\setcounter{III}{0}%
-			\whiledo{{\value{III}<\value{nexa}}}{\stepcounter{III}\Lexa{\roman{III}}\\}%
-			\setcounter{III}{0}%
-			\vspace{0.15cm}%
-			\whiledo{{\value{III}<\value{nadv}}}{\stepcounter{III}\Ladv{\roman{III}}\\}%
-			\ifnum\thengue=1%
-			{\bfseries~\\Invité~:\\}%
+			\ifnum\thenexaM>1%
+				\newcommand{\TExam}{Examinateurs~:}
+			\else%
+				\ifnum\thenexaM=1%
+					\ifnum\thenexaF>0 
+						\newcommand{\TExam}{Examinateurs~:}
+					\else
+						\newcommand{\TExam}{Examinateur~:}
+					\fi
+				\else
+					\ifnum\thenexaF>1 
+						\newcommand{\TExam}{Examinatrices~:}
+					\else%
+						\newcommand{\TExam}{Examinatrice~:}
+					\fi
+				\fi
 			\fi%
-			\ifnum\thengue>1%
-			{\bfseries~\\Invités~:\\}%
-			\fi%
-			\setcounter{III}{0}%			
-			\whiledo{{\value{III}<\value{ngue}}}{\stepcounter{III}\Lgue{\roman{III}}}%			
+			\begin{tabular}{@{}l@{\thinspace}lll}
+				\dbox{\TPres{}~:}& \PRESp~\textsc{\PRESn{}}& &\PRESq\\%
+				\whiledo{{\value{III}<\value{nexa}}}{\stepcounter{III}\Lexa{\roman{III}}}%
+				\setcounter{III}{0}%
+				&&&\\[0.15cm]%\vspace{0.15cm}%
+				\whiledo{{\value{III}<\value{nadv}}}{\stepcounter{III}\Ladv{\roman{III}}}%
+			\end{tabular}
+			\ifnum\thengue>0
+				\ifnum\thengueM>1%
+					\newcommand{\TInvit}{Invités~:}
+				\else%
+					\ifnum\thengueM=1%
+						\ifnum\thengueF>0 
+							\newcommand{\TInvit}{Invités~:}
+						\else
+							\newcommand{\TInvit}{Invité~:}
+						\fi
+					\else
+						\ifnum\thengueF>1 
+							\newcommand{\TInvit}{Invitées~:}
+						\else%
+							\newcommand{\TInvit}{Invitée~:}
+						\fi
+					\fi
+				\fi%
+				{\bfseries~\\\TInvit\\}%
+				\setcounter{III}{0}%
+				\begin{tabular}{@{}l@{}lll}
+					\whiledo{{\value{III}<\value{ngue}}}{\stepcounter{III}\Lgue{\roman{III}}}%
+				\end{tabular}
+		\fi
 		}%
-	}%	
+	}%
 }%
 
 %----------------------------------------------------------------------------------------
@@ -1198,16 +1258,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			overlay,%
 			line width=0mm,%
 			node distance=\nodeD,%
-			%st/.style={draw,
-			%	anchor=north west,
-			%	text width=17cm}
 			]%
 			% BACKGROUND
 			\node[anchor=center] at (current page.center){\includegraphics[height=\paperheight,width=\paperwidth]{\@coverbackground}};%
 			%
-			\node[,anchor=north west] (FL) at (page cs:-0.869,0.925) {%
+			\node[,anchor=north west] (FL) at (page cs:-0.869,0.925) {% 
 				\includegraphics[height=23.5mm,keepaspectratio]{./cover/logos/logo-mathSTIC.\@coverext}%
-			};%	
+			};%
 			\ifcotutele% 
 			% LOGO COTUTELE
 			\node[anchor= east] (FC) at (page cs:0.869,0.840) {%
@@ -1221,7 +1278,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			\node[left = 0.3cm of FUR1.west] (FR) {%
 				\includegraphics[height=\logoH,width=\logoW]{./cover/logos/logo-\logoUNIV.\@coverext}%
 			};%
-			\else%		    
+			\else%
 			% ONLY COTUTULE
 			\node[left = 0.3cm of FC.west] (FR) {%
 				\includegraphics[height=\logoH,width=\logoW]{./cover/logos/logo-\logoUNIV.\@coverext}%
@@ -1242,7 +1299,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 				\includegraphics[height=\logoH,width=\logoW]{./cover/logos/logo-\logoUNIV.\@coverext}%
 			};%
 			\fi%
-			\fi%	
+			\fi%
 			% TEXT TITLE LINE 1
 			\node[st] (H1) at (page cs:-0.85,0.65) {%
 				{\fontfamily{phv}\selectfont\scshape\Huge Th\`{e}se de Doctorat de}%
@@ -1259,13 +1316,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 					\addcomue}%
 			};%
 			% Bloc 3
-			\node[st,below = 0.9cm of H2] (H3)  {%				
+			\node[st,below = 0.9cm of H2] (H3)  {%
 				{\fontfamily{phv}\selectfont\scshape \'{E}col\'{e} Doctorale N{\footnotesize\textsuperscript{\underline{o}}} \deptnumber}\\%
 				{\itshape \fontfamily{phv}\selectfont \deptname}\\%
 				{\fontfamily{phv}\selectfont Sp\'{e}cialit\'{e} : \subjectname} \\[0.25cm]%
 			};%
 			% AUTHOR NAME
-			\node[st,below = 1.0cm of H3] (H4) {%
+			\node[st,below = 8.4cm of H1] (H4) {%
                 {\fontfamily{phv}\selectfont{}Par\\}
 				{\LARGE\bfseries\fontfamily{phv}\selectfont\hspace*{0.5cm}\@author}%
 			};%
@@ -1276,7 +1333,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 				}%
 			};
 			% Bloc 6
-			\node[st, below = 1.0cm of H5] (H6) {%
+			\node[st, below = 0.8cm of H5] (H6) {%
 				{\fontfamily{phv}\selectfont\bfseries Th\`{e}se pr\'{e}sent\'{e}e et soutenue \`{a} \cityname{} le \@date \\%
 					Unit\'{e} de recherche : \labname\\% 
 					Th\`{e}se N{\footnotesize\textsuperscript{\underline{o}}} : \theseorder% 
@@ -1301,11 +1358,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \abstractbackground{./cover/back_resume.\@coverext}
 %
 \NewDocumentCommand{\makeabstract}{}{%
-	%\thispagestyle{empty}
-	%\clearpage
-	%	\addchap*{\abstractname}
-	
-	%	\iflanguage{french}{\run@renchtrue}{\run@frenchfalse}
 	\addchap{Résumé/Abstract}
 	\begin{spacing}{1.0}  %  always one spacing
 		\begin{tikzpicture}[%
@@ -1383,7 +1435,6 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 		};
 		\end{tikzpicture}
 	\end{spacing}
-%	\cleardoublepage
 }%
 
 %----------------------------------------------------------------------------------------
@@ -1392,11 +1443,9 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \def\makebackcover{%
 	\pagestyle{empty}%
 	\cleardoublepage%
-	%\pagenumbering{gobble}%
-	%\pagestyle{empty}%
 	\ifodd\thepage % Now, is it odd? 
-	\null% 'fill` and clear again
-	\clearpage%
+		\null% 'fill` and clear again
+		\clearpage%
 	\fi
 	{%
 		\makeabstract
@@ -1500,7 +1549,9 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\ifbool{nolistspace}{\endgroup}{}
 }
 
-% Compiler dependet fix.
+%----------------------------------------------------------------------------------------
+% Compiler dependet fixes and tunnings.
+%----------------------------------------------------------------------------------------
 \ifx\pdfoutput\undefined
     % not running pdfTeX
 \else
@@ -1542,13 +1593,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 }
 
 %----------------------------------------------------------------------------------------
-%	PUT THE BACKCOVER THERE
+%	PUT THE BACKCOVER AT THE LAST PAGE
 %----------------------------------------------------------------------------------------
 \AtEndDocument{%
-\makebackcover
+	\makebackcover
 }
 
-% disable page counter reseting.
+% disable page counter reseting for th mainmatter command.
 \renewcommand\mainmatter{%
 	\@mainmattertrue\cleardoublepage\renewcommand\thepage{\arabic{page}}}
 

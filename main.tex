@@ -5,22 +5,21 @@ a4paper,           % paper size
 12pt,              % The default document font size, options: 10pt, 11pt, 12pt
 onehalfspacing,    % onehalfspacing line spacing, alternatives: doublespacing, or singlespacing
 nolistspacing,     % If the document is onehalfspacing or doublespacing, uncomment this to set spacing
-		    	   % in lists to single
+                   % in lists to single
 indentfirst,       % Uncomment to indent the first paragraph of each chapter/section/etc. 
 parskip,           % Uncomment to add space between paragraphs
 headsepline,       % Uncomment to get a line under the header
 %chapterinoneline, % Uncomment to place the chapter title next to the number on one line
 %consistentlayout, % Uncomment to change the layout of the declaration, abstract and 
                    % acknowledgements pages to match the default layout
-liststotoc,		   % Uncomment to add the list of figures/tables/etc to the table of contents
+liststotoc,        % Uncomment to add the list of figures/tables/etc to the table of contents
 toctotoc,          % Uncomment to add the main table of contents to the table of contents
-%
 % -----------------
 % LANGUAGE SETUP <--- LOOK AT ME I'M VERY IMPORTANT!	
 % -----------------	
 {french,english},  % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN ENGLISH
 %{english,french}, % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN FRENCH 
- -----------------
+% -----------------
 % EXTRA RESOURCES
 % -----------------	
 %nocleverefsupport, % Uncomment to not load the  clevref package (\Cref and \cref)
@@ -36,15 +35,7 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 \usepackage{mathpazo} % Use the Palatino font by default
 %\usepackage[libertine,cmintegrals,cmbraces,vvarbb]{newtxmath}
 %\usepackage[scaled=0.95]{inconsolata}
-\usepackage{siunitx} % for unites 
 
-% Used only for examples
-\usepackage{blindtext}    % for this example file only
-\usepackage{lipsum}       % for his example file only
-\usepackage[Q=yes]{examplep} % for his example file only
-%----------------
-
-\usepackage{algorithmic} % you can use another.
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
@@ -59,34 +50,35 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %----------------------------------------------------------------------------------------
 % Your advisors (fisrt is the director) others: co-director
 %----------------------------------------------------------------------------------------
-\advisor[Mme]{Dr.\ Jeanne}{d'Arc}{Fonction ---  établissement d’exercice}
+\advisor[Mme]{Dr.\ Jeanne}{d'Arc}{Fonction, établissement d’exercice}
 % comment the line below if you DONT have a co-directeur 
-\advisor[Mme]{Dr.\ Ayrton}{Senna da Silva}{Fonction ---  établissement d’exercice}
-%\advisor[M]{Dr.\ Blaise}{Pascal}{Fonction ---  établissement d’exercice}
+\advisor[M]{Dr.\ Ayrton}{Senna da Silva}{Fonction,  établissement d’exercice}
+%\advisor[M]{Dr.\ Blaise}{Pascal}{Fonction, établissement d’exercice}
 
 %----------------------------------------------------------------------------------------
 % Jury President
 %----------------------------------------------------------------------------------------
-\president[Mme]{Dr.\ Ada}{Lovelace}{Fonction ---  établissement d’exercice}
+\president[Mme]{Dr.\ Ada}{Lovelace}{Fonction,  établissement d’exercice}
 
 %----------------------------------------------------------------------------------------
 % Jury Rapporteurs
 %----------------------------------------------------------------------------------------
-\rapporteur[M]{Dr.\ George}{Pompidou}{Fonction ---  établissement d’exercice}
-\rapporteur[Mme]{Dr.\ Alain}{Prost}{Fonction ---  établissement d’exercice}
-%\rapporteur[M]{Dr.\ George}{Pompidou}{Fonction ---  établissement d’exercice}
-%\rapporteur[Mme]{Dr.\ Ada}{Lovelace}{Fonction ---  établissement d’exercice}
+\rapporteur[M]{Dr.\ George}{Pompidou}{Fonction, établissement d’exercice}
+\rapporteur[M]{Dr.\ Alain}{Prost}{Fonction,  établissement d’exercice}
+%\rapporteur[M]{Dr.\ George}{Pompidou}{Fonction,  établissement d’exercice}
+%\rapporteur[Mme]{Dr.\ Ada}{Lovelace}{Fonction,  établissement d’exercice}
 %----------------------------------------------------------------------------------------
 % Jury Examinateur
 %----------------------------------------------------------------------------------------
-\examinateur[M]{Dr.\ Donald Ervin}{Knuth}{Fonction ---  établissement d’exercice}
-\examinateur[M]{Dr.\ Leslie}{Lamport}{Fonction ---  établissement d’exercice}
-%\examinateur[M]{Dr.\ George}{Pompidou}{Fonction ---  établissement d’exercice}
-%\examinateur[Mme]{Dr.\ Ada}{Lovelace}{Fonction ---  établissement d’exercice}
+\examinateur[M]{Dr.\ Donald Ervin}{Knuth}{Fonction,  établissement d’exercice}
+\examinateur[M]{Dr.\ Leslie}{Lamport}{Fonction,  établissement d’exercice}
+%\examinateur[M]{Dr.\ George}{Pompidou}{Fonction,  établissement d’exercice}
+%\examinateur[Mme]{Dr.\ Ada}{Lovelace}{Fonction,  établissement d’exercice}
 %----------------------------------------------------------------------------------------
 % Jury Invités
 %----------------------------------------------------------------------------------------
-\invite[M]{Dr.\ Ricardo}{Carlini}{Fonction ---  établissement d’exercice}
+\invite[M]{Dr.\ Ricardo}{Carlini}{Fonction,  établissement d’exercice}
+%\invite[Mme]{Dr.\ Julia}{Carlini}{Fonction,  établissement d’exercice}
 
 % Your school:
 %\school{AGRO}% AGRO - Agrocampus Ouest
@@ -105,17 +97,17 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %\school{UN}    %    UN - Université de Nantes 
 %\school{UR1}   %   UR1 - Université Rennes 1
 %\school{UR2}   %   UR2 - Université Rennes 2 
-% ENIB
-\school{AGRO}
+%
+\school{UR2}
 %----------------------------------------------------------------------------------------
-% Look at https://theses.u-bretagneloire.fr/bs
+% Look at https://theses.u-bretagneloire.fr/mathstic
 \lab{IRISA --- UMR6074}
 %----------------------------------------------------------------------------------------
-% Look at https://theses.u-bretagneloire.fr/bs
-\subject{voir liste des spécialités} % Informatique
+% Look at https://theses.u-bretagneloire.fr/mathstic
+\subject{\href{https://theses.u-bretagneloire.fr/mathstic}{voir liste des spécialités}} % Informatique
 %----------------------------------------------------------------------------------------
 % In case of cotutle, we need to inform, the logo_path and the university name
-%\cotutele{logo-PUCMINAS}{Pontifícia Universidade Católica de Minas Gerais --- Brasil}
+\cotutele{logo-PUCMINAS}{Pontifícia Universidade Católica de Minas Gerais --- Brasil}
 %----------------------------------------------------------------------------------------
 % city
 \city{Lieu}
@@ -135,16 +127,15 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %}
 
 %----------------------------------------------------------------------------------------
-% If your thesis is in French
+% If you thesis doesnt have a subtitle comment the lines (subtitle and sostitre).
 %----------------------------------------------------------------------------------------
 \title{Thesis Title}
 \subtitle{Thesis subtitle} % comment you dont have a subtitle
 \titre{Titre de la thèse}
 \soustitre{Sous-titre de la thèse}  % comment you dont have a subtitle
 
-
 %----------------------------------------------------------------------------------------
-% Abstract: 
+% Abstract page (resume and abstract / the last page): 
 %----------------------------------------------------------------------------------------
 \abstract{%
 	\foreignlanguage{english}{\blindtext[3]}
@@ -158,16 +149,16 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 \motscles{de 3 à 6 mots clefs}
 %----------------------------------------------------------------------------------------
 
-
-%\usepackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
-
-
 \addbibresource{example.bib} % The filename of the bibliography
 %----------------------------------------------------------------------------------------1
 % PUT HERE YOUR EXTRA PACKAGES
 %----------------------------------------------------------------------------------------
-
-
+\usepackage{siunitx} % for unites 
+% Used only for examples
+\usepackage{blindtext}    % for this example file only
+\usepackage{lipsum}       % for his example file only
+\usepackage[Q=yes]{examplep} % for his example file only
+\usepackage{algorithmic} % you can use another.
 
 %----------------------------------------------------------------------------------------
 %  The document structure begins here!
@@ -190,7 +181,7 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %	Acknowledgements
 %----------------------------------------------------------------------------------------
 \include{./appendices/acknowledgements}
-\dominitoc
+\dominitoc%
 \setcounter{mtc}{2}   % To fix the minitoc content (before Résumé Étendú we have the acknow.)
 %----------------------------------------------------------------------------------------
 %	Resume Etendu en Francais (only if your thesis is in English)
@@ -227,17 +218,17 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 %\backmatter
-\tableofcontents   % Prints the main table of contents
-\listoffigures     % Prints the list of figures
-\listoftables  	   % Prints the list of tables
-\listofalgorithms  % Prints the list of tables
+\tableofcontents%   % Prints the main table of contents
+\listoffigures%     % Prints the list of figures
+\listoftables%  	   % Prints the list of tables
+\listofalgorithms%  % Prints the list of tables
 \include{./appendices/symbols}	   % list of symbols
 \include{./appendices/constants}     % list of constants
 
-% USING acro package content are in ./acro-def.tex
+% USING acro package. Your acro contents are in ./acro-def.tex
 \ifbool{acrosupport}{%
-    \printacronyms
-}{% ELSE
+    \printacronyms%
+}{% NOT USING acro package. Your acro contents are in ./appendices/abbreviations.tex
 	\include{./appendices/abbreviations} % list of abbreviations
 }
 
@@ -251,6 +242,7 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
+\backmatter%
 \addpart{\bibname}		% start Bibiography part
 \nocite{*} 				% force to cite all entries
 
