@@ -2,7 +2,7 @@
 <img src="/tex/87181ad2b235919e0785dee664166921.svg?invert_in_darkmode&sanitize=true" align=middle width=45.69716744999999pt height=22.465723500000017pt/>  PhD thesis template for the _Université Bretagne Loire_ (UBL) MathSTIC Doctoral School.
 
 Last version: 2.0.0
-[Link dowload release 2.0.0](https://drive.google.com/drive/folders/1JJLK4g8ZMs1k6xDMJImjpZC9Sg0LLbO5?usp=sharing)
+ [Link dowload release 2.0.0](https://drive.google.com/drive/folders/1JJLK4g8ZMs1k6xDMJImjpZC9Sg0LLbO5?usp=sharing)
 
 -----
 *English explanations*
@@ -118,6 +118,8 @@ To fill the front and back cover is really easy. Considering the as base the fil
    -`\simplebox{Title of my box}{content}`: Create a box without title
    
    -`\ublmstic`: writes $\mathrm{MathSTIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}$
+
+   -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
    
    -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
    
