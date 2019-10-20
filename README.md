@@ -14,6 +14,7 @@ The main goal of this template is to provide a full automatization of the <img s
 The class provides the cover and back cover, according to the [MathSTIC specifications](https://web.u-bretagneloire.fr/doctorat/couverture/accordeon4.html). It provides simple commands to fill all items in the cover (and back cover) as specified in the [_guide pour compléter les champs_](https://doctorat.u-bretagneloire.fr/couverture/pdf/Couverture_infosObligatoires20160706.pdf).
 Also, the policy of fonts, paragraphs, page numbering and margins, too, the style of elements positioning (summary, list of items, appendix, bibliography) defined in [FORM@DOCT](https://guides-formadoct.u-bretagneloire.fr/these_normes_formats).
 
+
 ## Multilanguage support
 The class is multilanguage. When you specify the option `{french,english}` the class expects an English thesis, and actives the _Résumé Étendú_ chapter. Otherwise, if the option is `{english,french}` the class expects a French thesis, so it  disables the _Résumé Étendú_ chapter, and automatically translates the package `algorithmc` to French.
 
@@ -48,11 +49,11 @@ To fill the front and back cover is really easy. Considering the as base the fil
 
 * About you advisors (one entry per advisor/co-advisor):
 
-  -`\advisor[Gender]{Name}{Surname}{Function --- establishment}`: Informations about your advisor(s). 
+  -`\advisor[Gender]{Name}{Surname}{Function, establishment}`: Informations about your advisor(s). 
     - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if (co-)director or (co-)directrice.
     - Name: The first name
     - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-    - Function --- establishment: 
+    - Function, establishment: 
  
 * About the School:
 
@@ -70,29 +71,29 @@ To fill the front and back cover is really easy. Considering the as base the fil
 
   -`\date{}`: Your defenses date (in French)
   
-  -`\president[Gender]{Name}{Surname}{Function --- establishment}`:
+  -`\president[Gender]{Name}{Surname}{Function, establishment}`:
   - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if President or Presidente.
   - Name: The first name
   - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-  - Function --- establishment:
+  - Function, establishment:
   
-  -`\rapporteur[Gender]{Name}{Surname}{}`  (one entry per rapporteur):
+  -`\rapporteur[Gender]{Name}{Surname}{Function, establishment}`  (one entry per rapporteur):
   - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Rapporteur or Rapportrice.
   - Name: The first name
   - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-  - Function --- establishment:
+  - Function, establishment:
 
-  -`\examinateur[Gender]{Name}{Surname}{}`  (one entry per examinateur):
+  -`\examinateur[Gender]{Name}{Surname}{Function, establishment}`  (one entry per examinateur):
   - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Examinateur or Examinatrice.
   - Name: The first name
   - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-  - Function --- establishment:
+  - Function, establishment:
         
-  -`\invite[Gender]{Name}{Surname}{}`  (one entry per invite): if you don't have any guest, remove or comment this entry
+  -`\invite[Gender]{Name}{Surname}{Function, establishment}`  (one entry per invite): if you don't have any guest, remove or comment this entry
   - Gender: *M* (_Monsieur_,  default by omission) or *Mme* (_Madame_) --- used to define the french word if Invité or Invitée.
   - Name: The first name
   - Surname: the surname (*do not put all in caps*, the code automatically apply small caps)
-  - Function --- establishment:
+  - Function, establishment:
     
   # Extra commands:
    -`\summary` : Make the summary (one level TOC, used at the beginning of the document).
@@ -119,8 +120,6 @@ To fill the front and back cover is really easy. Considering the as base the fil
    
    -`\ublmstic`: writes $\mathrm{MathSTIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}$
 
-   -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
-   
    -`\apud[see][pgnumber]{author}[opttext][pagenumber]{author}`: Produces a indirect citation.
    
 ## Class options:
