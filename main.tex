@@ -6,11 +6,11 @@ a4paper,           % paper size
 onehalfspacing,    % onehalfspacing line spacing, alternatives: doublespacing, or singlespacing
 nolistspacing,     % If the document is onehalfspacing or doublespacing, uncomment this to set spacing
                    % in lists to single
-indentfirst,       % Uncomment to indent the first paragraph of each chapter/section/etc. 
+indentfirst,       % Uncomment to indent the first paragraph of each chapter/section/etc.
 parskip,           % Uncomment to add space between paragraphs
 headsepline,       % Uncomment to get a line under the header
 %chapterinoneline, % Uncomment to place the chapter title next to the number on one line
-%consistentlayout, % Uncomment to change the layout of the declaration, abstract and 
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and
                    % acknowledgements pages to match the default layout
 liststotoc,        % Uncomment to add the list of figures/tables/etc to the table of contents
 toctotoc,          % Uncomment to add the main table of contents to the table of contents
@@ -18,7 +18,7 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 % LANGUAGE SETUP <--- LOOK AT ME I'M VERY IMPORTANT!	
 % -----------------	
 {french,english},  % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN ENGLISH
-%{english,french}, % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN FRENCH 
+%{english,french}, % second, first -- USE IF YOU ARE WRITING YOUR THESIS IN FRENCH
 % -----------------
 % EXTRA RESOURCES
 % -----------------	
@@ -26,8 +26,8 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %nohyperrefsupport, % Uncomment to not load the hyperref package
 %noacro,               % Uncomment to not load the acro package
 % -----------------
-% FOR DEBUGING     
-% -----------------    
+% FOR DEBUGING
+% -----------------
 %draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 ]{MathSTICUBL}
 \usepackage[T1]{fontenc}
@@ -175,7 +175,7 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %----------------------------------------------------------------------------------------
 %	DEDICATION
 %----------------------------------------------------------------------------------------
-\dedicatory{à Julia et Fernanda} 
+\dedicatory{\`{a} Julia et Fernanda} 
 
 %----------------------------------------------------------------------------------------
 %	Acknowledgements
@@ -196,9 +196,6 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 \pagestyle{thesis}               % Return the page headers back to the "thesis" style
 %\pdfbookmark[1]{Contents}{toc}
 \summary% 
-
-
-
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
@@ -243,14 +240,12 @@ toctotoc,          % Uncomment to add the main table of contents to the table of
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 \backmatter%
-\addpart{\bibname}		% start Bibiography part
+\addpartB{\bibname}		% start Bibiography part
 \nocite{*} 				% force to cite all entries
 
-%\printbibliography[heading=bibintoc]
-% nocite: In order to cite all the references included biblio
-
+% If you are using the separation between primary and secundary sources:
 \printbibliography[heading=primary,keyword=primary]
-\newpage
 \printbibliography[heading=secondary,keyword=secondary]
-
+% otherwise, comment the two previously lines and uncomment the next.
+%\printbibliography[heading=bibintoc]
 \end{document}

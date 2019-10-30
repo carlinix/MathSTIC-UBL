@@ -12,7 +12,7 @@ I hope you enjoy it.\footnote{If you have any suggestion or contribution, you ar
 % ------------------------------------------------------------------------------------------------------
 \section{Why \LaTeX?}\label{sec:why}
 Ok, you're a Ph.D. candidate at Math\textsc{stic} in Université Bretagne Loire, so probably you are familiar with \LaTeX{}, and so this introduction is \textbf{not} for you.
-However,  if it is not your case, and you are not familiar with \LaTeX{}, the question remains: Why I \emph{must} use \LaTeX?
+However,  if it is not your case, and you are not familiar with \LaTeX{}, the question remains: Why I \emph{must} use \LaTeX\@?
 
 You need to use it because with \LaTeX{} is easily able to professionally typeset documents that run to hundreds or thousands of pages long. 
 With simple mark-up commands, it automatically sets out the table of contents, margins, page headers, and footers and keeps the formatting consistent and beautiful. 
@@ -26,12 +26,12 @@ Instead, a document written for \LaTeX{} is actually a simple, plain text file t
 You tell \LaTeX{} how you want the formatting in the finished document by writing in simple commands amongst the text, for example, if I want to use \emph{italic text for emphasis}, I write the \verb|\emph{text}| command and put the text I want in italics in between the curly braces. 
 This means that \LaTeX{} is a \enquote{mark-up} language, very much like \textsc{html}.
 
-You can learn how to use it in many sources, I suggest to look at \cite{lamport1994latex}, among others.
+You can learn how to use it in many sources, I suggest to look at~\cite{lamport1994latex}, among others.
 
 
 % ------------------------------------------------------------------------------------------------------
-\section{How to use the \ublmstic}\label{sec-howtoubl}
-The \ublmstic class automatizes \emph{absolute} everything to produces your thesis according to the UBL specifications.
+\section{How to use the \texorpdfstring{\ublmstic}{UBL-\textsc{mathstic}}}\label{sec-howtoubl}
+The \ublmstic{} class automatizes \emph{absolute} everything to produces your thesis according to the UBL specifications.
 
 We provide some options, which are used to enable or disable some extra features.
 Also, new commands are provided to delivery some functionalities.
@@ -116,7 +116,7 @@ Groups & Treatment X & Treatment Y \\
 		\WHILE{\TRUE{}}
 		\IF{ext\_u $\ne \emptyset$}
 		\STATE{q $\leftarrow$ POP(ext\_u)} \COMMENT{next node in the ext\_u list.}
-		\STATE{cand $\leftarrow$ cand \arraybackslash {q}} \COMMENT{remove q node from cand.}
+		\STATE{cand $\leftarrow$ cand $\arraybackslash$ {q}} \COMMENT{remove q node from cand.}
 		\STATE{Q $\leftarrow$ PUSH(Q,q)} \COMMENT{Push q in the list Q.}
 		\STATE{adj\_q $\leftarrow$ list of adjacent of q}
 		\STATE{subg\_q $\leftarrow$ subgraph with all adjacents of q} 

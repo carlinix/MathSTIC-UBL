@@ -247,11 +247,17 @@
 %----------------------------------------------------------------------------------------
 % TODO: I don't know why this need to be after the ProcessOptions command.
 %\RequirePackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\newcommand{\bib@style}{authoryear}
+\renewcommand{\bib@style}{ieee-alphabetic}
+\renewcommand{\bib@style}{authoryear-icomp}
+\renewcommand{\bib@style}{verbose-trad1}
+
 \ifbool{hyperrefsupport}{%
-	\RequirePackage[style=verbose-trad1,hyperref,backend=biber,natbib=true]{biblatex}
+	\PassOptionsToPackage{style=\bib@style,hyperref,backend=biber,natbib=true}{biblatex}
 }{%
-	\RequirePackage[style=verbose-trad1,backend=biber,natbib=true]{biblatex}
+	\PassOptionsToPackage{style=\bib@style,backend=biber,natbib=true}{biblatex}
 }
+\RequirePackage{biblatex}
 
 \providecaptionname{english,british,american}{\bibheadingnameP}{Primary Sources}
 \providecaptionname{french}{\bibheadingnameP}{Sources primaires}
@@ -456,6 +462,11 @@
 
 %\usepackage{mfirstuc}
 
+\NewDocumentCommand{\cleartoleftpage}{}{%
+  \clearpage
+  \ifodd\value{page}\hbox{}\newpage\fi
+}
+
 \newcommand*\MakeFUpperCase[1]{{#1}} % TODO: 
 
 \NewDocumentCommand{\summary}{}{%
@@ -523,31 +534,32 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 % MAGIC BOX
 %----------------------------------------------------------------------------------------
 \NewDocumentCommand{\magicbox}{m +m}{%
-    \begin{center}
-    \begin{tikzpicture}
-    % la boite
-    \node[rectangle,draw=fondtitre!100,fill=fonddeboite!100,inner sep=10pt, inner ysep=20pt] (mabox)%
-        {\begin{minipage}{0.57\paperwidth}#2\end{minipage}};
-    % le titre de la boite
-    \node[fill=fondtitre!100, text=white, rectangle] at (mabox.north) {\sffamily\textbf{#1}};
-    \end{tikzpicture}
-    \end{center}
+	\begin{center}
+		\begin{tikzpicture}
+		% la boite
+		\node[rectangle,draw=fondtitre!100,fill=fonddeboite!100,inner sep=10pt, inner ysep=20pt] (mabox)%
+		{\begin{minipage}{0.57\paperwidth}#2\end{minipage}};
+		% le titre de la boite
+		\node[fill=fondtitre!100, text=white, rectangle] at (mabox.north) {\sffamily\textbf{#1}};
+		\end{tikzpicture}
+	\end{center}
 }
 %----------------------------------------------------------------------------------------
 % SIMPLE BOX
 %----------------------------------------------------------------------------------------
 \NewDocumentCommand{\simplebox}{+m}{%
-    \begin{center}\begin{minipage}{0.57\paperwidth}\begin{shaded}#1\end{shaded}\end{minipage}\end{center}}
+	\begin{center}\begin{minipage}{0.57\paperwidth}\begin{shaded}#1\end{shaded}\end{minipage}\end{center}}
 
-\NewDocumentCommand{\tttypeout}{m}{\bhrule\typeout{\space\#1}\bhrule}
+\NewDocumentCommand{\tttypeout}{m}{\bhrule\typeout{#1}\bhrule}
 \NewDocumentCommand{\bhrule}{}{\typeout{--------------------}}
+
 \newcommand{\decoRule}{\rule{.8\textwidth}{.4pt}} % New command for a rule to be used under figures
 
 \ProvideDocumentCommand{\addchaptertocentry}{m}{%
 	\addcontentsline{toc}{chapter}{#1}%
 }
 
-% Addchap provides unnumbered chapters with an entry in the table of contents as well as an updated header
+% Addpart provides unnumbered parts with an entry in the table of contents as well as an updated header
 \ProvideDocumentCommand{\addpart}{s o m}{%
 	\part*{#3}%
 	\markboth{}{}%
@@ -558,6 +570,23 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			\markboth{\MakeMarkcase{#3}}{\MakeMarkcase{#3}}%
 		}{%
 			\addcontentsline{toc}{part}{#3}%
+			\markboth{\MakeMarkcase{#2}}{\MakeMarkcase{#2}}%
+		}%
+	}%
+}%
+
+
+% AddpartB provides unnumbered part with an entry in the table of contents (as a chapter) as well as an updated header
+\ProvideDocumentCommand{\addpartB}{s o m}{%
+	\part*{#3}%
+	\markboth{}{}%
+	\IfBooleanTF{#1}{%
+	}{%
+		\IfNoValueTF{#2}{%
+			\addcontentsline{toc}{chapter}{#3}%
+			\markboth{\MakeMarkcase{#3}}{\MakeMarkcase{#3}}%
+		}{%
+			\addcontentsline{toc}{chapter}{#3}%
 			\markboth{\MakeMarkcase{#2}}{\MakeMarkcase{#2}}%
 		}%
 	}%
@@ -925,12 +954,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 %	QUOTATION PAGE DESIGN
 %----------------------------------------------------------------------------------------
 \NewDocumentCommand\makequotation{+mmm}{% #1 can contain \par
+    \tttypeout{Quotation}
 	\clearpage
 	\thispagestyle{empty}
 	\vspace*{0.2\textheight}
 	\noindent\enquote{\itshape #1%
 	}.\bigbreak%
-	\hfill #2 \emph{#3}%
+	\hfill #2, \emph{#3}%
 }
 %----------------------------------------------------------------------------------------
 % Defining a new coordinate system for the page, Helpfull to the cover page.
@@ -1170,7 +1200,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	\vspace{0.25cm}%
 	{\fontfamily{phv}\selectfont\bfseries~\\Composition du jury~:\\}%
 	{\fontfamily{phv}\selectfont\footnotesize%
-		\textcolor{mathSTIC-Color}{\textit{Attention, en cas d'absence d’un des membres du Jury le jour de la soutenance,  la composition ne comprend que les membres pr\'{e}sents}}}\\%
+		\textcolor{mathSTIC-Color}{\textit{Attention, en cas d'absence d’un des membres du Jury le jour de la soutenance, la composition ne comprend que les membres pr\'{e}sents}}}\\%
 	{\setlength{\baselineskip}{0.5\baselineskip}%
 		{\fontfamily{phv}\selectfont\small%
 			\setcounter{III}{0}%
@@ -1236,6 +1266,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 \newcommand*{\coverbackground}[1]{\gdef\@coverbackground{#1}}%
 \coverbackground{./cover/cover\covertypen.\@coverext}
 \def\maketitle{%
+    \tttypeout{Cover}
 	\newgeometry{margin=1.1cm}%
 	\newcounter{totalJury}
 	\setcounter{totalJury}{0}
@@ -1249,8 +1280,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 		\whiledo{{\value{extraJury}>10}}{\addtocounter{extraJury}{-1}\advance\nodeD by -0.2cm}% 0.03125
 	\fi
 	\begin{spacing}{1.0} % cover is always 1 line spacing
-		\begin{otherlanguage}{french} % cover is always in French (of course, the title, certain not... )
-			%\pagenumbering{gobble} % NEEDS ?
+		\begin{otherlanguage}{french} % cover is always in French (of course, the title, certain not...)
 			\thispagestyle{empty}%
 			\clearpage%
 			\begin{tikzpicture}[%
@@ -1308,10 +1338,10 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			\node[st,below = 2.7cm of H1] (H2) {%
 				{\fontfamily{phv}\selectfont\scshape{\Large \univname}\\%
 					\ifdeliveconj%
-                    {Deliver\'{e}e Conjointement avec\\l’Universit\'{e} de Rennes 1}\\%
+						{Deliver\'{e}e Conjointement avec\\l’Universit\'{e} de Rennes 1}\\%
 					\fi%
 					\ifcotutele%
-                    {\cotutelename}\\%
+						{\cotutelename}\\%
 					\fi% 
 					\addcomue}%
 			};%
@@ -1323,13 +1353,13 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 			};%
 			% AUTHOR NAME
 			\node[st,below = 8.4cm of H1] (H4) {%
-                {\fontfamily{phv}\selectfont{}Par\\}
+				{\fontfamily{phv}\selectfont{}Par\\}
 				{\LARGE\bfseries\fontfamily{phv}\selectfont\hspace*{0.5cm}\@author}%
 			};%
 			% TITLE / SUBTITLE
 			\node[st, align=center, below = 0.5cm of H4] (H5){%
 				{\centering\scshape{\Large\bfseries\fontfamily{phv}\selectfont\@title} \\%
-                    \iftsubt{\large\@subtitle}\else{\large\phantom{XXXXXX}}\fi%
+				\iftsubt{\large\@subtitle}\else{\large\phantom{XXXXXX}}\fi%
 				}%
 			};
 			% Bloc 6
@@ -1352,13 +1382,18 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 }%
 
 %----------------------------------------------------------------------------------------
-%	ABSTRACT PAGE DESIGN
+%	ABSTRACT PAGE DESIGN (BACK COVER PAGE)
 %----------------------------------------------------------------------------------------
 \newcommand*{\abstractbackground}[1]{\gdef\@abstractbackground{#1}}
 \abstractbackground{./cover/back_resume.\@coverext}
 %
-\NewDocumentCommand{\makeabstract}{}{%
+\def\makebackcover{%
+	\pagestyle{empty}%
+    \cleartoleftpage%
+%	\makeabstract%
+%\NewDocumentCommand{\makeabstract}{}{%
 	\addchap{Résumé/Abstract}
+	\tttypeout{Abstract}
 	\begin{spacing}{1.0}  %  always one spacing
 		\begin{tikzpicture}[%
 		remember picture,%
@@ -1417,7 +1452,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 				\vspace{-0.25cm}
 				\begin{multicols}{2}
 				\noindent\textbf{R\'{e}sum\'{e} : }
-					\begin{otherlanguage}{french}\small{\abstractTF}\end{otherlanguage}%
+				\begin{otherlanguage}{french}\small{\abstractTF}\end{otherlanguage}%
 				\end{multicols}%
 			}
 		};
@@ -1430,26 +1465,11 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 				\vspace{-0.25cm}
 				\begin{multicols}{2}
 				\noindent\textbf{Abstract: }%
-					\begin{otherlanguage}{english}\small{\abstractT}\end{otherlanguage}
+				\begin{otherlanguage}{english}\small{\abstractT}\end{otherlanguage}
 				\end{multicols}}
 		};
 		\end{tikzpicture}
 	\end{spacing}
-}%
-
-%----------------------------------------------------------------------------------------
-%	COVER BACK PAGE
-%----------------------------------------------------------------------------------------
-\def\makebackcover{%
-	\pagestyle{empty}%
-	\cleardoublepage%
-	\ifodd\thepage % Now, is it odd? 
-		\null% 'fill` and clear again
-		\clearpage%
-	\fi
-	{%
-		\makeabstract
-	}%
 }%
 
 %----------------------------------------------------------------------------------------
