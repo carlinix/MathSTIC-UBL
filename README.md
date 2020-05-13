@@ -33,7 +33,7 @@ To fill the front and back cover is really easy. Considering the as base the fil
 
   -`\titre{French Title}`: French title of your thesis    
 
-  -`\suostitre{French subtitle}`: French subtitle of you thesis, comment if you dont have one
+  -`\soustitre{French subtitle}`: French subtitle of you thesis, comment if you dont have one
 
   -`\subject{}`: The subject (domain) of your work: Options are found in [Spécialités](https://theses.u-bretagneloire.fr/bs).
 
