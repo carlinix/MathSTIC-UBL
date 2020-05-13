@@ -51,16 +51,53 @@
 
 \providecommand{\baseclass}{book} % build uppon book
 
-
-\LoadClass{\baseclass}
-%----------------------------------------------------------------------------------------
-%	REQUIRED PACKAGES
-%----------------------------------------------------------------------------------------
+% Moved here to fix options to class
 \RequirePackage{etoolbox} % The package provides functions that seem to offer alternative 
  						  % ways of implementing some LATEX kernel commands;
  						  % in special \AtEndPreamble and \AtBeginDocument
 \RequirePackage{xparse}   % replacement for LATEX2ε’s \newcommand macro, with significantly
                           % improved functionality.                          
+
+\newbool{parskip}
+\newbool{indentfirst}
+\newbool{draftmode}
+\newbool{headsepline}
+\newbool{nolistspace}
+\newbool{consistentlayout}
+\newbool{chapteroneline}
+\newbool{hyperrefsupport}
+\booltrue{hyperrefsupport} 
+\newbool{cleverefsupport}
+\booltrue{cleverefsupport} 
+\newbool{listtoc}
+\newbool{toctoc}
+\newbool{acrosupport}
+\booltrue{acrosupport} 
+%\newbool{nolistspace}
+%\newbool{chapteroneline}
+%\newbool{listtoc}
+%\newbool{toctoc}
+
+\DeclareOption{consistentlayout}{\booltrue{consistentlayout}}
+\DeclareOption{draft}{\booltrue{draftmode}}
+\DeclareOption{parskip}{\booltrue{parskip}}
+\DeclareOption{indentfirst}{\booltrue{indentfirst}}
+\DeclareOption{headsepline}{\booltrue{headsepline}}
+\DeclareOption{nolistspacing}{\booltrue{nolistspace}}
+\DeclareOption{chapterinoneline}{\booltrue{chapteroneline}}
+\DeclareOption{nohyperref}{\boolfalse{hyperrefsupport}}
+\DeclareOption{nocleveref}{\boolfalse{cleverrefsupport}}
+\DeclareOption{noacro}{\boolfalse{acrosupport}}
+\DeclareOption{liststotoc}{\booltrue{listtoc}}
+\DeclareOption{toctotoc}{\booltrue{toctoc}}
+
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
+\ProcessOptions\relax
+
+\LoadClass{\baseclass}
+%----------------------------------------------------------------------------------------
+%	REQUIRED PACKAGES
+%----------------------------------------------------------------------------------------
 \RequirePackage{ifthen}
                           
 % Language related packages
@@ -204,42 +241,12 @@
 }
 %----------------------------------------------------------------------------------------
 \newcounter{socdepth}
-\newbool{parskip}
-\newbool{indentfirst}
-\newbool{draftmode}
-\newbool{headsepline}
-\newbool{nolistspace}
-\newbool{consistentlayout}
-\newbool{chapteroneline}
-\newbool{hyperrefsupport}
-\booltrue{hyperrefsupport} 
-\newbool{cleverefsupport}
-\booltrue{cleverefsupport} 
-\newbool{listtoc}
-\newbool{toctoc}
-\newbool{acrosupport}
-\booltrue{acrosupport} 
 %\newcounter{UBLupperchapter}
 %\newcounter{UBLuppersection}
 %\newcounter{UBLuppersubsection}
 %\newcounter{UBLuppersubsubsection}
 
 %----------------------------------------------------------------------------------------
-\DeclareOption{consistentlayout}{\booltrue{consistentlayout}}
-\DeclareOption{draft}{\booltrue{draftmode}}
-\DeclareOption{parskip}{\booltrue{parskip}}
-\DeclareOption{indentfirst}{\booltrue{indentfirst}}
-\DeclareOption{headsepline}{\booltrue{headsepline}}
-\DeclareOption{nolistspacing}{\booltrue{nolistspace}}
-\DeclareOption{chapterinoneline}{\booltrue{chapteroneline}}
-\DeclareOption{nohyperref}{\boolfalse{hyperrefsupport}}
-\DeclareOption{nocleveref}{\boolfalse{cleverrefsupport}}
-\DeclareOption{noacro}{\boolfalse{acrosupport}}
-\DeclareOption{liststotoc}{\booltrue{listtoc}}
-\DeclareOption{toctotoc}{\booltrue{toctoc}}
-
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
-\ProcessOptions\relax
 
 
 %----------------------------------------------------------------------------------------
