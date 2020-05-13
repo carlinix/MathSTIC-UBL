@@ -820,7 +820,7 @@ Math{STIC}-\raisebox{.15ex}{U}\raisebox{-.15ex}{B}\raisebox{.15ex}{L}
 	%
 	{\ifthenelse{\equal{#1}{CS}}{%
 	\def\logoUNIV{CS} 
-	\def\univname{CentraleSuperlec Rennes} 
+	\def\univname{CentraleSup\'{e}lec Rennes} 
 	\logoH=2.08cm 
 	\logoW=4.11cm}
 	%
